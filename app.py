@@ -17,4 +17,4 @@ def index():
 @app.route("/dice")
 def dice():
     dice = random.randint(1, 6)
-    return f"<body bgcolor='{random_color()}'> <center> <h3>The dice rolled, you've got</h3> <h1>{dice}</h1><a href='{url_for('dice')}'>Roll again</a><br><br><br><br><br><a href='{url_for('index')}'>Back to index</a></center></body>" 
+    return f"<body bgcolor='{random_color()}'> <center> <h3>The dice rolled! You've got: </h3> <h1>{dice}</h1><a href='{url_for('dice')}'>Roll again</a><br><br><br><br><br><a href='{url_for('index')}'>Back to index</a></center></body>" 
