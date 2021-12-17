@@ -1,10 +1,18 @@
-from flask import Flask
-from flask import url_for
-
 import random
-import datetime
+from datetime import datetime
+from flask import Flask
+from flask import url_for, render_template
 
 app = Flask(__name__)
+
+def roll_dice():
+    return random.randint(1, 6)
+
+def wall_calendar():
+    return datetime.now().strftime('%A %B %d. %Y ')
+
+def wall_clock():
+    return datetime.now().strftime('%H:%M')
 
 def random_color():
     r = lambda: random.randint(0,255)
@@ -12,9 +20,17 @@ def random_color():
 
 @app.route("/")
 def index(): 
-    return f"<center> <h1>Hello, World!</h1> <h5>Today is {datetime.datetime.today().strftime('%A')}</h5> <a href='{url_for('dice')}'>Play Dice</a> </center>"
+    return render_template("index.html") 
 
 @app.route("/dice")
-def dice():
-    dice = random.randint(1, 6)
-    return f"<body bgcolor='{random_color()}'> <center> <h3>The dice rolled! You've got: </h3> <h1>{dice}</h1><a href='{url_for('dice')}'>Roll again</a><br><br><br><br><br><a href='{url_for('index')}'>Back to index</a></center></body>" 
+def dice(): 
+    return render_template("dice.html", dice_=roll_dice())
+
+@app.route("/datetime")
+def date_and_time():
+    return render_template("datetime.html", date=wall_calendar(), time=wall_clock())
+
+@app.route('/about')
+def about(): 
+    return render_template("about.html")
+   
