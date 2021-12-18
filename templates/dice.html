@@ -2,19 +2,28 @@
 
 <head>
     <title>Play dice</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
 </head>
 
-<body bgcolor='{random_color()}'>
+<body bgcolor="{{random_color}}">
     <center>
+        {% include 'parts/navigation.html' %}
 
         <h3> The dice rolled! You' ve got: </h3>
-        <h1>{{dice_}}</h1>
-        <a href='/dice'>Roll again</a>
+        <div id="dice-roll">{{ dice }}</div>
+        <a href="/dice" id="roll-again-link">Roll again</a>
+        <p> Check below some dice games. </p>
         <br><br><br>
-
-        <a href="/">Home</a> |
-        <a href="/datetime">Date and Time</a> |
-        <a href="/about">About Me</a>
+        
+        {% if dice % 3 == 0 %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/FIYcKIFsNK8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        |
+        {% elif dice % 3 == 1 %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/__hygFCxvzY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        |
+        {% else %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/8Cil0XBhYPY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endif %}
+        
+        {% include 'parts/footer.html' %}
     </center>
 </body>
 

@@ -2,18 +2,22 @@
 
 <head>
     <title>Hello, World!</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
 </head>
 
-<body bgcolor="white">
+<body>
     <center>
-        <h1>Hello, World!</h1>
+        {% include 'parts/navigation.html' %}
 
-        Welcome to my first web app!
-        <br><br><br>
+        <div class="content">
+            <br>
+            <h1>Hello, World!</h1>
+            <br>
+            <h2>Welcome to my first web app!</h2>
+            <br>
+        </div>
 
-        <a href="/dice">Play Dice</a> |
-        <a href="/datetime">Date and Time</a> |
-        <a href="/about">About Me</a>
+        {% include 'parts/footer.html' %}
     </center>
 </body>
 

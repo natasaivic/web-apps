@@ -2,17 +2,38 @@
 
 <head>
     <title>About me</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
 </head>
 
-<body bgcolor="white">
+<body>
     <center>
+        {% include 'parts/navigation.html' %}
 
-        <h2>My name is Natasa Ivic. This is my first web app.</h2>
-        <br><br><br>
-
-        <a href="/">Home</a> |
-        <a href="/dice">Play Dice</a> |
-        <a href="/datetime">Date and Time</a>
+        <p> My name is Natasa Ivic. Serbian born. Bay Area based. Degree in Mathematics. Data Analyst. This is my first web app.</p>
+        <br>
+        <div class="mapouter">
+            <div class="gmap_canvas">
+                <iframe width="480" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=Twin%20Peaks,%20San%20Francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="margin-left:auto; margin-right:auto;></iframe>
+                <a href=" https://123movies-to.org "></a><br>
+                <style>
+                    .mapouter {
+                        position: relative;
+                        text-align: right;
+                        height: 500px;
+                        width: 600px;
+                    }
+                </style><a href="https://www.embedgooglemap.net ">embedgooglemap.net</a>
+                <style>
+                    .gmap_canvas {
+                        overflow: hidden;
+                        background: none!important;
+                        height: 500px;
+                        width: 600px;
+                    }
+                </style>
+            </div>
+        </div>
+    
     </center>
 </body>
 
