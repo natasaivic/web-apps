@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <title>Play dice</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
+</head>
+
+<body bgcolor="{{random_color}}">
+    <center>
+        {% include 'parts/navigation.html' %}
+
+        <h3> The dice rolled! You' ve got: </h3>
+        <div id="dice-roll">{{ dice }}</div>
+        <a href="/dice" id="roll-again-link">Roll again</a>
+        <p> Check below some dice games. </p>
+        <br><br><br>
+        
+        {% if dice % 3 == 0 %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/FIYcKIFsNK8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        |
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Pf2guaQzw1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% elif dice % 3 == 1 %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/__hygFCxvzY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        |
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ME-IAfh5E6I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% else %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/8Cil0XBhYPY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        |
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/TB-BRLH14TE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endif %}
+        
+        {% include 'parts/footer.html' %}
+    </center>
+</body>
+
+</html>
