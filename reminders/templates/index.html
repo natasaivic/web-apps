@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>Reminders</title>
+</head>
+
+<body>
+    <h1>Reminders</h1>
+    <a href="/add"> New item </a>
+
+    <ul>
+        {% for item in items %}
+        <li> {{item[0]}} - {{item[1]}} </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>
