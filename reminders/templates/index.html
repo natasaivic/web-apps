@@ -2,15 +2,16 @@
 
 <head>
     <title>Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <h1>Reminders</h1>
-    <a href="/add"> New item </a>
 
+    <a href="/add"> Add new item </a>
     <ul>
-        {% for item in items %}
-        <li> {{item[0]}} - {{item[1]}} </li>
+        {% for item_index in range(items|count) %}
+        <li> {{items[item_index][0]}} | {{items[item_index][1]}} <a href="/delete/{{item_index}}" onclick="return confirm('Are you sure?')">delete</a></li>
         {% endfor %}
     </ul>
 

@@ -2,17 +2,20 @@
 
 <head>
     <title>Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
+
     <h1>Reminders</h1>
-    <a href="/"> Back to list </a>
+
+    <h3>New item form</h3>
     <form method="post" action="/add">
         <input type="date" name="date" required>
-        <input type="text" name="reminder" required>
+        <input type="text" name="reminder" required placeholder="Type here">
         <input type="submit">
     </form>
-
+    <a href="/">Back to list</a>
 
 </body>
 

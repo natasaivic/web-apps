@@ -1,0 +1,36 @@
+html {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    width: 400px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+h1 {
+    font-size: 18pt;
+}
+
+a,
+a:visited {
+    color: cadetblue;
+}
+
+a:hover {
+    color: coral;
+}
+
+li {
+    font-size: 14pt;
+}
+
+li a {
+    font-size: 8pt;
+    margin-left: 1px;
+    vertical-align: top;
+}
+
+li a:hover {
+    color: crimson;
+}
