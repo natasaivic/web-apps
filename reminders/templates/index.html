@@ -11,7 +11,32 @@
     <a href="/add"> Add new item </a>
     <ul>
         {% for item_index in range(items|count) %}
-        <li> {{items[item_index][0]}} | {{items[item_index][1]}} <a href="/delete/{{item_index}}" onclick="return confirm('Are you sure?')">delete</a></li>
+
+            {% if items[item_index][2] == '1' %}
+        <li class="done">
+            {% else %}
+        <li>
+            {% endif %}
+
+        
+
+            {% if expired_dates[items[item_index][0]] %}
+                <span class="expired">
+            {% else %}
+                <span>
+            {% endif %}
+                {{items[item_index][0]}} 
+            </span>
+
+
+            {{items[item_index][1]}}
+            <a href="/delete/{{item_index}}" onclick="return confirm('Are you sure?')">delete</a> |
+            {% if items[item_index][2] == '1' %}
+            <a href="/undone/{{item_index}}">undone</a>
+            {% else %}
+            <a href="/done/{{item_index}}">done</a>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 
