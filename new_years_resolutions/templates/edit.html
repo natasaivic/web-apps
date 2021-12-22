@@ -1,0 +1,20 @@
+<html>
+
+<head>
+    <title>Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>🛎⏳ Reminders ⏳🛎</h1>
+    <h2>Edit reminder</h2>
+
+    <form method='POST' action="/edit/{{id}}">
+        <input type="date" name="date" required value="{{date}}">
+        <input type="text" name="message" required value="{{message}}">
+        <input type="submit">
+    </form>
+    <a href="/">Back to home page</a>
+</body>
+
+</html>

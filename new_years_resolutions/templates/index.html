@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>🛎⏳ Reminders ⏳🛎</h1>
+    <h2>Get ready for 2022</h2>
+    <a href="/add">Add new reminder</a>
+    <ul>
+        {% for reminder in reminders %}
+        <li class="lista_style"> {{reminder[1]}} {{reminder[2]}} | <a href="/edit/{{reminder[0]}}">edit</a> | <a href="/delete/{{reminder[0]}}">delete</a> </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
