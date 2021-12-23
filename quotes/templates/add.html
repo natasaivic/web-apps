@@ -1,0 +1,20 @@
+<html>
+
+<head>
+    <title>Quotes</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <h1><u>Quotes</u></h1>
+    <h3>New quote:</h3>
+    <form method="POST" action="/add" class="add-form">
+        <input type="text" placeholder="Author" name="author" required class="add-form">
+        <!-- <input type="text" placeholder="Type new quote" name="quote" required> -->
+        <textarea rows="8" cols="50" name="quote" placeholder="Type new quote" required></textarea>
+        <input type="submit" class="add-form">
+    </form>
+    <a href="/">Back to home page</a>
+</body>
+
+</html>

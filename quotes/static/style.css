@@ -1,0 +1,66 @@
+html {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    background-image: url("/static/images/DI9A8148.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 800pt;
+    margin: 100pt;
+}
+
+h1 {
+    font-size: 46pt;
+    color: honeydew;
+}
+
+h3 {
+    font-size: 24pt;
+    color: honeydew;
+}
+
+li {
+    color: rgb(185, 203, 169);
+    list-style: None;
+    margin: 10pt 10pt;
+}
+
+a {
+    color: honeydew;
+}
+
+form.add-form {
+    font: 1em sans-serif;
+    width: 420px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    color: rgb(75, 53, 43);
+}
+
+input.add-form {
+    width: 420px;
+}
+
+textarea {
+    font: 1em sans-serif;
+}
+
+a:hover {
+    color: turquoise
+}
+
+a.ope:hover {
+    color: yellowgreen;
+}
+
+a.opd:hover {
+    color: rgb(187, 33, 31);
+}
+
+form.search-form {
+    display: inline-block;
+    position: relative;
+    float: right;
+}

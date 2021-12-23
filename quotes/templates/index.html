@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>Quotes</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1><u>Quotes</u></h1>
+    <a href="/add">Add new quote</a>
+    <form method="GET" action="/" class="search-form">
+        <input type="text" placeholder="Search quotes" name="searchword" value="{{searchword}}">
+        <input type="submit" value="Search">
+        <a href="/">clear</a>
+    </form>
+    <ul>
+        {% for quote in quotes %}
+        <li>{{quote[1]}} {{quote[2]}} | <a class="ope" href="/edit/{{quote[0]}}">edit</a> | <a class="opd" href="/delete/{{quote[0]}}">delete</a> </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
