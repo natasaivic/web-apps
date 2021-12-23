@@ -7,7 +7,9 @@ def connect():
     except sqlite3.Error as e:
         print(e)
         exit(0)
+    
     return connection
+
 
 def execute(sql):
     conn = connect()
@@ -15,9 +17,11 @@ def execute(sql):
     cur.execute(sql)
     conn.commit()
 
+
 def query(sql):
     conn = connect()
     cur = conn.cursor()
     cur.execute(sql)
+    
     return cur.fetchall()
 

@@ -64,4 +64,3 @@ def edit(id):
 
     reminder = queries.select_reminder(id)[0]
     return render_template('edit.html', id=id, date=reminder[1], message=reminder[2])
-
