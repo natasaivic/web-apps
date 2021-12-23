@@ -6,6 +6,15 @@ def select_reminders():
     """
     return query
 
+def select_by_searchword(searchword):
+    query = f"""
+    SELECT id, date, message, done 
+    FROM `reminders` 
+    WHERE message LIKE '%{searchword}%'
+    ORDER by date ASC
+    """
+    return query
+
 def insert_reminder(date, message):
     query = f"""
     INSERT INTO `reminders` (`date`, `message`, `done`) 

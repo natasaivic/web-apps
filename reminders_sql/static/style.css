@@ -37,3 +37,9 @@ li {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+form.search-form {
+    display: inline-block;
+    position: relative;
+    float: right;
+}

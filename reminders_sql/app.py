@@ -17,7 +17,18 @@ def index():
     #   (1, '2021-12-20', 'Take a walk', 0), 
     #   (2, '2021-12-20', 'Bake cookies', 0)
     # ]
-    return render_template('index.html', reminders=db.get_reminders())
+
+    # How to implement search by criteria "q"? 
+    # 1. How do we know the "q" is sent, and how do we acces it?
+    searchword = request.args.get('searchword', '')
+    # 2. This won't be db.get_reminders() anymore but 
+    #    it should be something like db.get_by_criteria(), how do we implement it using SQL query?
+    if searchword == '':
+        reminders=db.get_reminders()
+    else:
+        reminders=db.get_by_searchword(searchword)
+
+    return render_template('index.html', reminders=reminders, searchword=searchword)
 
 
 @app.route("/add", methods=['POST', 'GET'])

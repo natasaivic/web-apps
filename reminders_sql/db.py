@@ -17,6 +17,13 @@ def get_reminders():
     
     return cursor.fetchall()
 
+def get_by_searchword(searchword):
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = queries.select_by_searchword(searchword)
+    cursor.execute(query) 
+    return cursor.fetchall()
+
 def add_reminder(date, message):
     conn = db_connection()
     cursor = conn.cursor()
