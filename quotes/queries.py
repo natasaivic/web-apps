@@ -41,7 +41,7 @@ def select_by_searchword(searchword):
     sql = f"""
     SELECT id, author, quote
     FROM quotes
-    WHERE quote LIKE '%{searchword}%'
+    WHERE quote LIKE '%{searchword}%' OR author LIKE '%{searchword}%'
     """
     return sql
 
