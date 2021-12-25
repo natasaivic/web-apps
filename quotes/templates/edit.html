@@ -8,10 +8,10 @@
 <body>
     <h1><u>Quotes</u></h1>
     <h3>Edit quote:</h3>
-    <form method="POST" action="/edit/{{id}}">
-        <input type="text" name="author" value={{author}} required>
+    <form method="POST" action="/edit/{{id}}" class="add-form">
+        <input type="text" name="author" value={{author}} required class="add-form">
         <textarea rows="8" cols="50" name="quote" placeholder="Type new quote" required>{{quote}}</textarea>
-        <input type="submit">
+        <input type="submit" class="add-form">
     </form>
     <a href="/">Back to home page</a>
 </body>
