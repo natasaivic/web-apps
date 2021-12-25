@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>Storbox</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Storbox</h1>
+    <hr>
+    <p><i>~ On this app you may store your files. ~</i></p>
+    <hr>
+    <a href="/add">Add files: </a>
+    <ul>
+        {% for file in files %}
+        <li>
+            {{file}} | <a href="/static/files/{{file}}" download class="opdwld">download</a> | <a href="/delete/{{file}}" class="opdel">delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
