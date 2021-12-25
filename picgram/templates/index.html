@@ -1,0 +1,20 @@
+<html>
+
+<head>
+    <title>Pictogram</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Pictogram</h1>
+    <hr>
+    <a href="/add">Post new image</a>
+    <hr> {% for file in files%}
+    <img src="/static/files/{{file}}" alt="Image"> {% endfor %}
+    <hr>
+    <a href="/#">Back to top</a>
+    <hr>
+
+</body>
+
+</html>
