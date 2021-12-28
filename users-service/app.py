@@ -12,9 +12,8 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 @app.route("/", methods=["POST", "GET"])
 def index():
     error = None
-    
     if request.method == "POST":
-        email = request.form['email']
+        email = request.form['email'] # form: The form parameters.
         password = md5(request.form['password'])
 
         # check db, if 0 results, then the username / password is wrong, 
@@ -24,22 +23,29 @@ def index():
             return redirect("/profile")
         error = "Wrong username and password combination"
 
-    return render_template("index.html", error=error)
+    return render_template("index.html", error=error, request=request)
 
 
-@app.route("/signup", methods=["POST", "GET"])
-def signup():
+@app.route("/register", methods=["POST", "GET"])
+def register():
     error = None 
 
     if request.method == "POST":
-        request.form['name']
-        request.form['surname']
+        firstname = request.form['firstname']
+        surname = request.form['surname']
         email = request.form['email']
-        md5(request.form['password'])
+        password = md5(request.form['password'])
 
-        is_existing = db.check_signing(email)
-        if is_existing != True:
-            return redirect("/profile")
-        error = "This email is already taken. Use different email."
+        is_existing = db.check_existing_email(email)
+        if is_existing == True:
+            error = "This email is already taken. Use different email."
+            return render_template("register.html", error=error)
+        
+        db.create_new_user_account(firstname, surname, email, password)
+        return redirect("/?reg=true")
 
-    return render_template("signup.html", error=error)
+    return render_template("register.html", error=error)
+
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")

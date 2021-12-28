@@ -1,12 +1,5 @@
 import sqlite3
 
-# CREATE TABLE users (
-#  id INTEGER PRIMARY KEY AUTOINCREMENT,
-#  email TEXT NOT NULL,
-#  password TEXT NOT NULL,
-#  active INTEGER DEFAULT 1 NOT NULL
-# );
-
 def connect():
     connection = None
     try:
@@ -44,13 +37,22 @@ def check_loging(email, password):
 
     return True
 
-def check_signing(email):
-    sql = """
+def check_existing_email(email):
+    """Will return true if email is exsting"""
+    sql = f"""
         SELECT id
         FROM users
         WHERE email='{email}'
     """
     result = query(sql)
-    if len(result) == 0:
-        return False
-    return True
+    return len(result) > 0
+
+def create_new_user_account(firstname, surname, email, password):
+    """Creates a new user in the users table"""
+    sql = f"""
+        INSERT INTO users
+        (firstname, surname, email, password)
+        VALUES
+        ('{firstname}', '{surname}', '{email}', '{password}')
+    """
+    execute(sql)

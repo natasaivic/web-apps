@@ -18,7 +18,7 @@
                 <form method="POST" action="/">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" aria-describedby="emailHelp" name="email" required>
+                        <input type="email" class="form-control" aria-describedby="emailHelp" name="email" required value="{{ request.form['email'] }}">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
@@ -28,7 +28,7 @@
 
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
-                <a href="/signup" class="link-primary">Don't have an account, signup here</a>
+                <a href="/register" class="link-primary">Don't have an account, register here</a>
                 <!-- /Form -->
 
                 <!-- Error (if ses)-->
@@ -38,6 +38,13 @@
                 </div>
                 {% endif %}
                 <!-- /Error (if ses)-->
+
+                {% if request.args.get('reg') == "true" %}
+                <!--args: The parsed URL parameters.-->
+                <div class="alert alert-info" role="alert">
+                    User account created successfully, please login.
+                </div>
+                {% endif %}
 
             </div>
 
