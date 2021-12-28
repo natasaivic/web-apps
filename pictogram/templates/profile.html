@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>Pictogram</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a href="/login">log in</a> | <a href="/">home</a> | <a href="/#">profile</a>
+        </nav>
+    </div>
+    <hr>
+    <div>
+        <form method="POST" action="/profile" enctype="multipart/form-data">
+            <label>Post your image: </label>
+            <input type="file" name="image" id="image" value="Select your image" required>
+            <textarea rows="4" cols="50" name="description" placeholder="Add description" required></textarea>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</body>
+
+</html>

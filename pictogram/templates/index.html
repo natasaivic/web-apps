@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Pictogram</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a href="/login">log in</a> | <a href="/#">home</a> | <a href="/profile">profile</a>
+        </nav>
+    </div>
+    <hr> {% for file in files %}
+    <img src="../static/files/{{file}} " alt="Image">
+    <p>🧡</p> {% endfor %}
+
+</body>
+
+</html>

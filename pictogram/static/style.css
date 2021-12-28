@@ -1,0 +1,19 @@
+nav {}
+
+body {
+    background-image: url("/static/images/DI9A0205.JPG");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 500pt;
+    margin: auto;
+    margin-top: 50pt;
+}
+
+img {
+    float: center;
+    width: 500pt;
+    height: auto;
+    margin-bottom: 30pt;
+}
