@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bookmarks app</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>My bookmarks</h1>
+    <h3>Add new bookmark</h3>
+
+    <form method="POST" action="/add">
+        <input type="text" placeholder="Type label" name="label" required>
+        <input type="text" placeholder="Type url" name="url" required>
+        <input type="submit">
+    </form>
+
+    <hr>
+    <a href="/">Back to home page</a>
+</body>
+
+</html>
