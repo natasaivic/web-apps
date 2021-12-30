@@ -1,0 +1,45 @@
+html {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    background-image: url('/static/images/DI9A8104.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    color: white;
+    background-color: transparent;
+}
+
+h1 {
+    font-size: 40pt;
+}
+
+h3 {
+    font-size: 20pt;
+}
+
+a {
+    color: crimson;
+    font-size: 15pt;
+}
+
+a:hover {
+    color: lightseagreen;
+}
+
+li {
+    font-size: 15pt;
+    list-style-type: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+form.search-form {
+    display: inline-block;
+    position: relative;
+    float: right;
+}

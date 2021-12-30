@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Holiday Reminders</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>🎊<u>Holiday Reminders</u></h1>
+    <a href="/add">New reminder</a>
+
+    <form method="GET" action="/" class="search-form">
+        <input type="text" placeholder="Search reminder" name="searchword" value="{{searchword}}">
+        <input type="submit" value="Search">
+        <a href="/">clear</a>
+    </form>
+
+    <ul>
+        {% for reminder in reminders %}
+        <li>
+            {{reminder[1]}} {{reminder[2]}}
+            <a href="/edit/{{reminder[0]}}">edit</a> |
+            <a href="/delete/{{reminder[0]}}" onclick="return confirm('Are you sure?')">delete</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+</body>
+
+</html>
