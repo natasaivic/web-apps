@@ -18,7 +18,10 @@
     </form>
     <!-- -->
 
-    <hr> {% if bookmarks|count == 0%}
+    <hr>
+    <a href="?order=newer">newer first</a> | <a href="?order=older">older first</a> 
+    
+    {% if bookmarks|count == 0%}
     <p><i>Yay! Your list is empty!</i></p>
     {% else %}
     <ul>

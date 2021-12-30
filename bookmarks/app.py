@@ -1,9 +1,11 @@
 from flask import Flask
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, abort
 
 import db
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 
 @app.route("/")
 def index():
@@ -14,7 +16,13 @@ def index():
     # 2. This won't be db.get_all() anymore but 
     #    it should be something like db.get_by_criteria(), how do we implement it using SQL query?
     if searchword == '':
-        bookmarks=db.get_all()
+        order_by = request.args.get("order", "newer")
+        if order_by == "older":
+            bookmarks=db.get_all("id DESC")
+        elif order_by == "newer":
+            bookmarks=db.get_all("id ASC")
+        else:
+            abort(400)
     else:
         bookmarks=db.get_by_searchword(searchword)
 

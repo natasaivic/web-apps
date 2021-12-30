@@ -28,11 +28,11 @@ def add_bookmark(label, url):
     """
     execute(sql)
 
-def get_all():
-    sql = """
+def get_all(order_by):
+    sql = f"""
         SELECT id, label, url, visited
         FROM bookmarks
-        ORDER BY id DESC
+        ORDER BY {order_by}
     """
     return query(sql)
 
