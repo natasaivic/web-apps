@@ -1,11 +1,16 @@
 from flask import Flask
 from flask import render_template, request, redirect, abort
-
+from datetime import datetime
 import db
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+def wall_calendar():
+    return datetime.now().strftime('%A %B %d. %Y ')
+
+def wall_clock():
+    return datetime.now().strftime('%H:%M')
 
 @app.route("/")
 def index():
@@ -26,7 +31,7 @@ def index():
     else:
         bookmarks=db.get_by_searchword(searchword)
 
-    return render_template("index.html", bookmarks=bookmarks, searchword=searchword)
+    return render_template("index.html", date=wall_calendar(), time=wall_clock(), bookmarks=bookmarks, searchword=searchword)
 
 @app.route("/add", methods=["POST", "GET"])
 def add():

@@ -8,6 +8,8 @@
 
 <body>
     <h1>My Bookmarks</h1>
+    <hr> {{date}} - {{time}}
+    <hr>
     <a href="/add">New bookmark</a>
 
     <!-- Search form (using GET request) -->
@@ -19,9 +21,7 @@
     <!-- -->
 
     <hr>
-    <a href="?order=newer">newer first</a> | <a href="?order=older">older first</a> 
-    
-    {% if bookmarks|count == 0%}
+    <a href="?order=newer">newer first</a> | <a href="?order=older">older first</a> {% if bookmarks|count == 0%}
     <p><i>Yay! Your list is empty!</i></p>
     {% else %}
     <ul>

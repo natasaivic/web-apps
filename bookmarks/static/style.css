@@ -5,6 +5,14 @@ html {
 body {
     width: 600px;
     margin: auto;
+    background-image: url("/static/images/DI9A5588 2.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+li {
+    list-style: none;
 }
 
 hr {
@@ -25,7 +33,7 @@ hr:after {
 }
 
 a {
-    color: teal;
+    color: rgb(8, 65, 65);
     text-decoration: none;
 }
 
