@@ -17,9 +17,9 @@
             <a href="?offset=0&limit={{limit}}">previous</a> {% endif %}
         </li>
         <li>
-            {% if offset !> offset_max %}
-            <a href="?offset={{offset + limit}}&limit={{limit}}">next</a> {% else %}
-            <a href="?offset={{offset}}&limit={{limit}}">next</a> {% endif %}
+            {% if offset + limit > offset_max %}
+            <a href="?offset={{offset}}&limit={{limit}}">next</a> {% else %}
+            <a href="?offset={{offset + limit}}&limit={{limit}}">next</a> {% endif %}
         </li>
     </ul>
     <br>
