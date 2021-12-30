@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bookmarks App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <h1>Add new bookmark</h1>
+    <form method="POST" action="/add">
+        <input type="text" placeholder="Type label" name="label" required>
+        <input type="text" placeholder="Paste url" name="url" required>
+        <input type="submit" placeholder="SUBMIT">
+    </form>
+    <hr>
+    <a href="/">Back to home</a>
+</body>
+
+</html>

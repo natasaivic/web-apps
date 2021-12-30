@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bookmarks App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Bookmarks App</h1>
+    <hr>
+    <a href="/add">Add new bookmark</a>
+    <hr>
+
+    <ul>
+        <li>
+            {% if offset > limit %}
+            <a href="?offset={{offset - limit}}&limit={{limit}}">previous</a>
+            {% else %}
+            <a href="?offset=0&limit={{limit}}">previous</a>
+            {% endif %}
+        </li>
+        <li>
+            <a href="?offset={{offset + limit}}&limit={{limit}}">next</a>
+        </li>
+    </ul>
+
+    <hr>
+
+    <ul>
+        {% for bookmark in bookmarks %}
+        <li>
+            <a href="{{bookmark[2]}}" target="_blank">{{bookmark[1]}}</a> |
+            <a href="/delete/{{bookmark[0]}}" onclick="return confirm('Are you sure?')">delete</a>
+
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+</body>
+
+</html>
