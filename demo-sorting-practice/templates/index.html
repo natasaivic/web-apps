@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bookmarks App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Bookmarks App</h1>
+    <hr>
+    <a href="/add">Add new bookmark</a>
+    <hr> Field: {% if sort_field == 'id' %}
+    <a href="?sort_field=id&sort_order={{sort_order}}"><b>id</b></a> |
+    <a href="?sort_field=label&sort_order={{sort_order}}">label</a> {% else %}
+    <a href="?sort_field=id&sort_order={{sort_order}}">id</a> |
+    <a href="?sort_field=label&sort_order={{sort_order}}"><b>label</b></a> {% endif %} | Order: {% if sort_order == 'desc' %}
+    <a href="?sort_order=asc&sort_field={{sort_field}}">asc</a> {% else %}
+    <a href="?sort_order=desc&sort_field={{sort_field}}">desc</a> {% endif %}
+
+    <ul>
+        {% for bookmark in bookmarks %}
+        <li>
+            <a href="{{bookmark[2]}}" target="_blank">{{bookmark[1]}}</a> |
+            <a href="/delete/{{bookmark[0]}}">delete</a> |
+            <a href="/edit/{{bookmark[0]}}">edit</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>

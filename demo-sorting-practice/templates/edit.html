@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bookmarks App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Edit Bookmarks</h1>
+
+    <hr>
+    <form action="/edit/{{id}}" method="POST">
+        <input type="text" name="label" value={{label}} required>
+        <input type="text" name="url" value={{url}} required>
+        <input type="submit">
+    </form>
+    <hr>
+    <a href="/">Back to home page</a>
+</body>
+
+</html>
