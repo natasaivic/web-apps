@@ -15,7 +15,10 @@
     </form>
     <ul>
         {% for quote in quotes %}
-        <li><a class="fav" href="/favorite/{{quote[0]}}"><span class="star">⭐</span>{{quote[1]}} {{quote[2]}}</a> | <a class="ope" href="/edit/{{quote[0]}}">edit</a> | <a class="opd" href="/delete/{{quote[0]}}">delete</a> </li>
+        <li><a class="fav" href="/favorite/{{quote[0]}}"><span class="star">⭐</span>{{quote[1]}} {{quote[2]}}</a> |
+            <a class="ope" href="/edit/{{quote[0]}}">edit</a> |
+            <a class="opd" href="/delete/{{quote[0]}}">delete</a>
+        </li>
         {% endfor %}
     </ul>
 </body>
