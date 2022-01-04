@@ -1,0 +1,38 @@
+body {
+    background-image: url(/static/images/DI9A5588.JPG);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.container {
+    display: inline-block;
+}
+
+._6luv {
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    box-sizing: border-box;
+    margin: 40px 0 0;
+    padding: 20px 0 28px;
+    width: 396px
+}
+
+._52jv {
+    text-align: center;
+}
+
+._6lux {
+    display: inline-block;
+    font-size: 14px;
+    margin: auto;
+    padding: 6px 0;
+    width: 302px
+}
+
+._6col {
+    color: darkolivegreen;
+}
