@@ -37,6 +37,7 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print(request.headers)
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -53,6 +54,7 @@ def login():
 
 @app.route("/profile")
 def profile():
+    print(request.headers)
     if not 'id' in session:
         return redirect("/")
 
