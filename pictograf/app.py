@@ -26,7 +26,10 @@ ALLOWED_EXTENSIONS = {"txt", "jpg", "png", "pdf", "jpeg", "gif"}
 app.config["IMAGE_UPLOADS"] = UPLOAD_FOLDER
 
 # setup logger
-logging.basicConfig(encoding="utf-8", level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(
+    encoding="utf-8", level=logging.INFO, format="%(asctime)s %(message)s"
+)
+
 
 def md5(input):
     return hashlib.md5(input.encode()).hexdigest()
@@ -54,6 +57,7 @@ def login():
             session["id"] = db.get_user_id(email)
             session["name"] = db.get_user_first_name(email)
             session["surname"] = db.get_user_last_name(email)
+            session["profile_pic"] = db.get_user_profile_pic(email)
             return redirect("/profile")
         else:
             logging.info("This profile does not exist. Try register first.")
@@ -122,7 +126,7 @@ def post():
 
         user_id = session["id"]
         caption = request.form["caption"]
-        create_on = datetime.now().strftime('%A, %B %d. %Y at %H:%M')
+        create_on = datetime.now().strftime("%A, %B %d. %Y at %H:%M")
         db.save_new_post(user_id, file_name, caption, create_on)
         logging.info("Post saved.")
 
@@ -142,13 +146,22 @@ def logout():
 
 @app.route("/user_profile/<int:user_id>")
 def user_profile(user_id):
-    if not 'id' in session:
+    if not "id" in session:
         return redirect("/")
-    
-    if session['id'] == user_id:
+
+    if session["id"] == user_id:
         return redirect("/profile")
-    
+
     posts = db.get_posts_by_user(user_id)
     first_name = db.get_profile_first_name(user_id)
     last_name = db.get_profile_last_name(user_id)
-    return render_template("user_profile.html", posts = posts, user_id=user_id, first_name=first_name, last_name=last_name)
+    profile_pic = db.get_profile_profile_pic(user_id)
+    
+    return render_template(
+        "user_profile.html",
+        posts=posts,
+        user_id=user_id,
+        first_name=first_name,
+        last_name=last_name,
+        profile_pic=profile_pic,
+    )

@@ -68,6 +68,14 @@ def get_user_last_name(email):
     """
     return query(sql)[0][0]
 
+def get_user_profile_pic(email):
+    sql = f"""
+    SELECT profile_pic
+    FROM registrar
+    WHERE email='{email}'
+    """
+    return query(sql)[0][0]
+
 def get_profile_first_name(user_id):
     sql = f"""
     SELECT name
@@ -79,6 +87,14 @@ def get_profile_first_name(user_id):
 def get_profile_last_name(user_id):
     sql = f"""
     SELECT surname
+    FROM registrar
+    WHERE id='{user_id}'
+    """
+    return query(sql)[0][0]
+
+def get_profile_profile_pic(user_id):
+    sql = f"""
+    SELECT profile_pic
     FROM registrar
     WHERE id='{user_id}'
     """
@@ -113,9 +129,9 @@ def get_posts_by_user(user_id):
 
 def get_latest_posts():
     sql = """
-    SELECT user_id, image_file, caption, create_on
-    FROM posts
-    ORDER BY id DESC
+    SELECT user_id, image_file, caption, create_on, profile_pic
+    FROM posts LEFT JOIN registrar AS users ON users.id = posts.user_id
+    ORDER BY posts.id DESC
     LIMIT 10
     """
     result = query(sql)
