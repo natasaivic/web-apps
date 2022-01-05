@@ -28,22 +28,25 @@
                 <h1 class="h3 mb-3 fw-normal">Please Log in</h1>
                 <div>
                     <div class="_6lux form-floating">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
                         <label for="floatingInput">Email address</label>
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="_6lux form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
                         <label for="floatingPassword">Password</label>
                     </div>
                 </div>
                 <div class="_6lux">
                     <button name="login" type="submit" class="w-100 btn btn-lg btn-primary">Log In</button>
                 </div>
-                <div class="_8icz"></div>
 
-                <div><a href="/register">Register New Account</a></div>
-                <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
             </form>
+            <div class="_8icz"></div>
+            <br>
+            <div><i>Don't have an account?</i></div>
+            <div><a href="/register">Register New Account</a></div>
+            <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
         </div>
     </div>
     <div class="col"></div>
