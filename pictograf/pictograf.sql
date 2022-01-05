@@ -11,6 +11,7 @@ CREATE TABLE posts (
     user_id INTEGER NOT NULL,
     image_file TEXT NOT NULL,
     caption TEXT NOT NULL,
-    likes INTEGER DEFAULT 0
+    likes INTEGER DEFAULT 0,
+    create_on TEXT NOT NULL
 );
 

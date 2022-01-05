@@ -1,34 +1,45 @@
 import os
+import logging
 
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
 from flask import session
 import hashlib
-import datetime
+from datetime import datetime
 
+import imagelib
 import db
+
 
 app = Flask(__name__)
 
-app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.secret_key = b'asdasd893asdas15hisr'
+# setup template reload (no caching)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-UPLOAD_FOLDER = './static/files'
-ALLOWED_EXTENSIONS = {'txt', 'jpg', 'png', 'pdf', 'jpeg', 'gif'}
-app.config['IMAGE_UPLOADS'] = UPLOAD_FOLDER
+# setup session secret key
+app.secret_key = b"asdasd893asdas15hisr"
 
+# setup image uploads
+UPLOAD_FOLDER = "./static/files"
+ALLOWED_EXTENSIONS = {"txt", "jpg", "png", "pdf", "jpeg", "gif"}
+app.config["IMAGE_UPLOADS"] = UPLOAD_FOLDER
+
+# setup logger
+logging.basicConfig(encoding="utf-8", level=logging.INFO, format='%(asctime)s %(message)s')
 
 def md5(input):
     return hashlib.md5(input.encode()).hexdigest()
 
+
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route("/")
 def index():
     return redirect("/login")
+
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -40,15 +51,16 @@ def login():
         login_sucessful = db.check_email_and_password(email, md5(password))
         if login_sucessful:
             # kreiraj sesiju
-            session['id'] = db.get_user_id(email)
-            session['name'] = db.get_user_first_name(email)
-            session['surname'] = db.get_user_last_name(email)
+            session["id"] = db.get_user_id(email)
+            session["name"] = db.get_user_first_name(email)
+            session["surname"] = db.get_user_last_name(email)
             return redirect("/profile")
         else:
-            print("This profile does not exist. Try register first.")
+            logging.info("This profile does not exist. Try register first.")
             return redirect("/login")
 
     return render_template("login.html")
+
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -67,44 +79,76 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route("/profile")
 def profile():
-    if not 'id' in session:
+    if not "id" in session:
         return redirect("/")
 
-    posts = db.get_posts_by_user(session['id'])
+    posts = db.get_posts_by_user(session["id"])
+    logging.info(posts)
+    logging.info("HELLO HELLO")
     return render_template("profile.html", posts=posts)
+
 
 @app.route("/feed")
 def feed():
-    if not 'id' in session:
+    if not "id" in session:
         return redirect("/")
-    
-    return render_template("feed.html")
+
+    posts = db.get_latest_posts()
+    return render_template("feed.html", posts=posts)
+
 
 @app.route("/post", methods=["POST", "GET"])
 def post():
-    if not 'id' in session:
+    if not "id" in session:
+        logging.error(
+            f"User tried to access forbidden area!! The user came from {request.remote_addr}"
+        )
         return redirect("/")
 
     if request.method == "POST" and request.files:
-        user_id = session['id']
         image = request.files["image"]
-        image_file = md5(f"{image.filename}-{datetime.datetime.now()}")
-        image_file = f"{image_file}.jpg"
-        image.save(os.path.join(app.config['IMAGE_UPLOADS'], image_file))
-        print("Image saved.")
+        file_name = md5(f"{image.filename}-{datetime.now()}")
+        file_name = f"{file_name}.jpg"
+        file_full_path = os.path.join(app.config["IMAGE_UPLOADS"], file_name)
 
+        image.save(file_full_path)
+        logging.info("Image saved.")
+
+        imagelib.resize(file_full_path)
+        logging.info("Image resized.")
+
+        user_id = session["id"]
         caption = request.form["caption"]
-        db.save_new_post(user_id, image_file, caption)
+        create_on = datetime.now().strftime('%A, %B %d. %Y at %H:%M')
+        db.save_new_post(user_id, file_name, caption, create_on)
+        logging.info("Post saved.")
+
+        logging.debug(image)
 
         return redirect("/profile")
 
     return render_template("post.html")
 
+
 @app.route("/logout")
 def logout():
-    session.pop('id', None)
-    
+    session.pop("id", None)
+
     return redirect("/login")
+
+
+@app.route("/user_profile/<int:user_id>")
+def user_profile(user_id):
+    if not 'id' in session:
+        return redirect("/")
     
+    if session['id'] == user_id:
+        return redirect("/profile")
+    
+    posts = db.get_posts_by_user(user_id)
+    first_name = db.get_profile_first_name(user_id)
+    last_name = db.get_profile_last_name(user_id)
+    return render_template("user_profile.html", posts = posts, user_id=user_id, first_name=first_name, last_name=last_name)

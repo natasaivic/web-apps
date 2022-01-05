@@ -68,6 +68,22 @@ def get_user_last_name(email):
     """
     return query(sql)[0][0]
 
+def get_profile_first_name(user_id):
+    sql = f"""
+    SELECT name
+    FROM registrar
+    WHERE id='{user_id}'
+    """
+    return query(sql)[0][0]
+
+def get_profile_last_name(user_id):
+    sql = f"""
+    SELECT surname
+    FROM registrar
+    WHERE id='{user_id}'
+    """
+    return query(sql)[0][0]
+
 def new_user_registration(name, surname, email, password):
     sql = f"""
     INSERT INTO registrar
@@ -77,20 +93,30 @@ def new_user_registration(name, surname, email, password):
     """
     execute(sql)
 
-def save_new_post(user_id, image_file, caption):
+def save_new_post(user_id, image_file, caption, create_on):
     sql = f"""
     INSERT INTO posts
-    (user_id, image_file, caption, likes)
+    (user_id, image_file, caption, likes, create_on)
     VALUES 
-    ('{user_id}', '{image_file}', '{caption}', 0)
+    ('{user_id}', '{image_file}', '{caption}', 0, '{create_on}')
     """
     execute(sql)
 
 def get_posts_by_user(user_id):
     sql = f"""
-    SELECT id, image_file, caption
+    SELECT id, image_file, caption, create_on
     FROM posts
     WHERE user_id='{user_id}'
+    ORDER BY id DESC
     """
     return query(sql)
 
+def get_latest_posts():
+    sql = """
+    SELECT user_id, image_file, caption, create_on
+    FROM posts
+    ORDER BY id DESC
+    LIMIT 10
+    """
+    result = query(sql)
+    return result
