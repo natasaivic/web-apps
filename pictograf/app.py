@@ -165,3 +165,22 @@ def user_profile(user_id):
         last_name=last_name,
         profile_pic=profile_pic,
     )
+
+
+@app.route("/edit_profile_pic", methods=["POST", "GET"])
+def edit_profile_pic():
+    if not "id" in session:
+        return redirect("/")
+
+    if request.method == "POST" and request.files:
+        image = request.files["image"]
+            
+        file_name = f"{session['id']}.jpg"
+        file_full_path = os.path.join(f"static/profile-pics/{file_name}")
+        image.save(file_full_path)
+        imagelib.resize(file_full_path)
+        db.update_profile_pic(session['id'], file_name)
+
+        return redirect("/profile")
+    
+    return render_template("edit_profile_pic.html")

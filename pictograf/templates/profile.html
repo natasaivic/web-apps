@@ -47,7 +47,7 @@
             </div>
 
             <div class="col">
-                <img src="/static/profile-pics/{{session['profile_pic'] if session['profile_pic'] else 'no-picture.jpg'}}" class="rounded-circle profile-pic">
+                <a href="/edit_profile_pic" title="Click to change profile picture"><img src="/static/profile-pics/{{session['profile_pic'] if session['profile_pic'] else 'no-picture.jpg'}}" class="rounded-circle profile-pic"></a>
                 <br> {{session['name']}} {{session['surname']}}
             </div>
         </div>

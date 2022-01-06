@@ -129,10 +129,18 @@ def get_posts_by_user(user_id):
 
 def get_latest_posts():
     sql = """
-    SELECT user_id, image_file, caption, create_on, profile_pic
+    SELECT user_id, image_file, caption, create_on, profile_pic, posts.id
     FROM posts LEFT JOIN registrar AS users ON users.id = posts.user_id
     ORDER BY posts.id DESC
     LIMIT 10
     """
     result = query(sql)
     return result
+
+def update_profile_pic(id, file_name):
+    sql = f"""
+    UPDATE registrar
+    SET profile_pic = '{file_name}'
+    WHERE id = '{id}'
+    """
+    execute(sql)

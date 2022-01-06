@@ -38,6 +38,11 @@
                             <img class="rounded-circle nav-pic" src="/static/profile-pics/{{post[4] if post[4] else 'no-picture.jpg'}}"></a> | {{post[3]}} <br> <img class="post" src="/static/files/{{post[1]}}">
                         <br> {{post[2]}}
                         <br>
+
+                        <form action="/comment/{{post[5]}}" method="POST">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </form>
+
                         <hr>
                     </li>
                     {% endfor %}
