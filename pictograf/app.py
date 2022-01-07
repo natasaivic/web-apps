@@ -90,9 +90,12 @@ def profile():
         return redirect("/")
 
     posts = db.get_posts_by_user(session["id"])
-    comments = db.get_comments_by_post(posts[0][0])
+    
+    post_comments = {}
+    for post in posts:
+        post_comments[post[0]] = db.get_comments_by_post(post[0])
 
-    return render_template("profile.html", posts=posts, comments=comments)
+    return render_template("profile.html", posts=posts, post_comments=post_comments)
 
 @app.route("/comment/<int:post_id>", methods=["POST"])
 def comment(post_id):
@@ -103,7 +106,7 @@ def comment(post_id):
         comment = request.form["comment"]
 
         user_id = session["id"]
-        created_on = datetime.now().strftime("%A, %B %d. %Y at %H:%M")
+        created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
         db.save_new_comment(user_id, post_id, comment, created_on)
     
     return redirect(request.referrer)
