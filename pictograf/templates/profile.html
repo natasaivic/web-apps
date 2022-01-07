@@ -38,7 +38,24 @@
                         <div><i class="create_on">{{post[3]}}</i></div>
                         <img class="post" src="/static/files/{{post[1]}}">
                         <br> {{post[2]}}
-                        <br>
+                        <br> {% if comments|count == 0 %}
+                        <form action="/comment/{{post[0]}}" method="POST">
+                            <textarea type="text" rows="3" cols="40" name="comment" placeholder="Comment"></textarea>
+                            <button type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button>
+                        </form>
+                        {% else %}
+                        <ul>
+                            {% for comment in comments %}
+                            <li>
+                                <img class="rounded-circle nav-pic" src="/static/profile-pics/{{comment[1]}}.jpg"> {{comment[2]}} | {{comment[3]}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <form action="/comment/{{post[0]}}" method="POST">
+                            <textarea type="text" rows="3" cols="40" name="comment" placeholder="Comment"></textarea>
+                            <button type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button>
+                        </form>
+                        {% endif %}
                         <hr>
                     </li>
                     {% endfor %}

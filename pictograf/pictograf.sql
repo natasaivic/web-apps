@@ -24,3 +24,10 @@ DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('registrar',2);
 INSERT INTO sqlite_sequence VALUES('posts',3);
 COMMIT;
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL,
+    created_on TEXT NOT NULL
+);

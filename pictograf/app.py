@@ -90,10 +90,23 @@ def profile():
         return redirect("/")
 
     posts = db.get_posts_by_user(session["id"])
-    logging.info(posts)
-    logging.info("HELLO HELLO")
-    return render_template("profile.html", posts=posts)
+    comments = db.get_comments_by_post(posts[0][0])
 
+    return render_template("profile.html", posts=posts, comments=comments)
+
+@app.route("/comment/<int:post_id>", methods=["POST"])
+def comment(post_id):
+    if not 'id' in session:
+        return redirect("/")
+
+    if request.method == "POST":
+        comment = request.form["comment"]
+
+        user_id = session["id"]
+        created_on = datetime.now().strftime("%A, %B %d. %Y at %H:%M")
+        db.save_new_comment(user_id, post_id, comment, created_on)
+    
+    return redirect(request.referrer)
 
 @app.route("/feed")
 def feed():
@@ -127,7 +140,7 @@ def post():
         user_id = session["id"]
         caption = request.form["caption"]
         create_on = datetime.now().strftime("%A, %B %d. %Y at %H:%M")
-        db.save_new_post(user_id, file_name, caption, create_on)
+        db.save_new_post(user_id, file_name, caption, create_on)      
         logging.info("Post saved.")
 
         logging.debug(image)

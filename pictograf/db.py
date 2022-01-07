@@ -144,3 +144,21 @@ def update_profile_pic(id, file_name):
     WHERE id = '{id}'
     """
     execute(sql)
+
+def save_new_comment(user_id, post_id, comment, created_on):
+    sql = f"""
+    INSERT INTO comments
+    (user_id, post_id, comment, created_on)
+    VALUES 
+    ('{user_id}', '{post_id}', '{comment}', '{created_on}')
+    """
+    execute(sql)
+
+def get_comments_by_post(post_id):
+    sql = f"""
+    SELECT id, user_id, comment, created_on
+    FROM comments 
+    WHERE post_id='{post_id}'
+    """
+    result = query(sql)
+    return result
