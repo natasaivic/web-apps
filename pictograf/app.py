@@ -180,6 +180,10 @@ def user_profile(user_id):
     last_name = db.get_profile_last_name(user_id)
     profile_pic = db.get_profile_profile_pic(user_id)
     
+    post_comments = {}
+    for post in posts:
+        post_comments[post[0]] = db.get_comments_by_post(post[0])
+
     return render_template(
         "user_profile.html",
         posts=posts,
@@ -187,6 +191,7 @@ def user_profile(user_id):
         first_name=first_name,
         last_name=last_name,
         profile_pic=profile_pic,
+        post_comments=post_comments
     )
 
 

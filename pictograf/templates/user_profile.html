@@ -34,9 +34,27 @@
                 <ul>
                     {% for post in posts %}
                     <li>
-                        <img class="post" src="/static/files/{{post[1]}}"> | {{post[3]}}
-                        <br> {{post[2]}}
-                        <br>
+                        {{post[3]}}
+                        <img class="post" src="/static/files/{{post[1]}}"> {{post[2]}}
+
+                        <br> {% if post_comments[post[0]] == 0 %}
+                        <form action="/comment/{{post[0]}}" method="POST">
+                            <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
+                            <button type="submit" name="comment">Submit comment</button>
+                        </form>
+                        {% else %}
+                        <ul>
+                            {% for comment in post_comments[post[0]] %}
+                            <li>
+                                <a><img class="rounded-circle nav-pic" src="/static/profile-pics/{{comment[1]}}.jpg"></a> {{comment[3]}} | {{comment[2]}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <form>
+                            <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
+                            <button type="submit" name="comment">Submit comment</button>
+                        </form>
+                        {% endif %}
                         <hr>
                     </li>
                     {% endfor %}
