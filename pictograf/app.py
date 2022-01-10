@@ -117,7 +117,14 @@ def feed():
         return redirect("/")
 
     posts = db.get_latest_posts()
-    return render_template("feed.html", posts=posts)
+    # SELECT user_id, image_file, caption, create_on, profile_pic, posts.id
+
+    post_comments = {}
+    for post in posts:
+        post_comments[post[5]] = db.get_comments_by_post(post[5])
+
+
+    return render_template("feed.html", posts=posts, post_comments=post_comments)
 
 
 @app.route("/post", methods=["POST", "GET"])

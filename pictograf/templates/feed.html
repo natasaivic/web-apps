@@ -37,27 +37,21 @@
                         <a href="/user_profile/{{post[0]}}">
                             <img class="rounded-circle nav-pic" src="/static/profile-pics/{{post[4] if post[4] else 'no-picture.jpg'}}"></a> | {{post[3]}} <br> <img class="post" src="/static/files/{{post[1]}}">
                         <br> {{post[2]}}
-                        <br>
-
+                        <br> {% if post_comments[post[5]]|count == 0 %}
                         <form action="/comment/{{post[5]}}" method="POST">
-                            <textarea class="form-control" rows="3"></textarea>
-                        </form>
-
-                        {% if post_comments[post[0]]|count == 0 %}
-                        <form action="/comment/{{post[0]}}" method="POST">
-                            <textarea type="text" rows="3" cols="40" name="comment" placeholder="Comment"></textarea>
+                            <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
                             <button type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button>
                         </form>
                         {% else %}
                         <ul>
-                            {% for comment in post_comments[post[0]] %}
+                            {% for comment in post_comments[post[5]] %}
                             <li>
-                                <img class="rounded-circle nav-pic" src="/static/profile-pics/{{comment[1]}}.jpg"> {{comment[2]}} | {{comment[3]}}
+                                <a href="/profile"><img class="rounded-circle nav-pic" src="/static/profile-pics/{{comment[1]}}.jpg"></a> {{comment[3]}} | {{comment[2]}}
                             </li>
                             {% endfor %}
                         </ul>
-                        <form action="/comment/{{post[0]}}" method="POST">
-                            <textarea type="text" rows="3" cols="40" name="comment" placeholder="Comment"></textarea>
+                        <form action="/comment/{{post[5]}}" method="POST">
+                            <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
                             <button type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button>
                         </form>
                         {% endif %}

@@ -65,3 +65,7 @@ li {
 div.create_on {
     text-align: right;
 }
+
+textarea.textarea {
+    width: 100%;
+}
