@@ -111,6 +111,11 @@ def comment(post_id):
     
     return redirect(request.referrer)
 
+@app.route("/delete/<int:id>")
+def delete(id):
+    db.delete_comment(id)
+    return redirect("/profile")
+
 @app.route("/feed")
 def feed():
     if not "id" in session:

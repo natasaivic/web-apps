@@ -162,3 +162,10 @@ def get_comments_by_post(post_id):
     """
     result = query(sql)
     return result
+
+def delete_comment(id):
+    sql = f"""
+    DELETE FROM comments
+    WHERE id={id}
+    """
+    execute(sql)
