@@ -145,6 +145,29 @@ def update_profile_pic(id, file_name):
     """
     execute(sql)
 
+def save_info(user_id, current_city, hometown, bio):
+    sql = f"""
+    INSERT INTO personal_info
+    (user_id, current_city, hometown, bio)
+    VALUES
+    ('{user_id}', '{current_city}', '{hometown}', '{bio}')
+    """
+    execute(sql)
+
+def get_info_by_user(user_id):
+    sql = f"""
+    SELECT current_city, hometown, bio
+    FROM personal_info
+    WHERE user_id = {user_id}
+    ORDER BY id DESC
+    LIMIT 1
+    """
+    result = query(sql)
+
+    if len(result) == 0:
+        return ["n/a", "n/a", "n/a"]
+    return result[0]
+
 def save_new_comment(user_id, post_id, comment, created_on):
     sql = f"""
     INSERT INTO comments

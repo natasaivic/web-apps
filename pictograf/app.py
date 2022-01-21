@@ -95,7 +95,9 @@ def profile():
     for post in posts:
         post_comments[post[0]] = db.get_comments_by_post(post[0])
 
-    return render_template("profile.html", posts=posts, post_comments=post_comments)
+    info = db.get_info_by_user(session["id"])
+    print(info)
+    return render_template("profile.html", posts=posts, post_comments=post_comments, info = info)
 
 @app.route("/comment/<int:post_id>", methods=["POST"])
 def comment(post_id):
@@ -217,3 +219,19 @@ def edit_profile_pic():
         return redirect("/profile")
     
     return render_template("edit_profile_pic.html")
+
+
+@app.route("/edit_profile", methods=["POST", "GET"])
+def edit_profile():
+    if not "id" in session:
+        return redirect("/")
+    
+    if request.method == "POST":
+        current_city = request.form["current_city"]
+        hometown = request.form["hometown"]
+        bio = request.form["bio"]
+        db.save_info(session["id"], current_city, hometown, bio)
+
+        return redirect("/profile")
+
+    return render_template("edit_profile.html")

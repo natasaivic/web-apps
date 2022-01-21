@@ -66,6 +66,11 @@
             <div class="col">
                 <a href="/edit_profile_pic" title="Click to change profile picture"><img src="/static/profile-pics/{{session['profile_pic'] if session['profile_pic'] else 'no-picture.jpg'}}" class="rounded-circle profile-pic"></a>
                 <br> {{session['name']}} {{session['surname']}}
+                <br>
+                <a href="/edit_profile">Edit profile</a>
+                <br> 📍 {{info[0]}}
+                <br> 🏡 {{info[1]}}
+                <br> 📝 {{info[2]}}
             </div>
         </div>
     </div>

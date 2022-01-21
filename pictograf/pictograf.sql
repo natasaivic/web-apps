@@ -31,3 +31,11 @@ CREATE TABLE comments (
     post_id INTEGER NOT NULL,
     created_on TEXT NOT NULL
 );
+
+CREATE TABLE personal_info (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    current_city TEXT NOT NULL,
+    hometown TEXT NOT NULL,
+    bio TEXT NOT NULL
+);
