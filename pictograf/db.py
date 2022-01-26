@@ -44,6 +44,14 @@ def check_email_in_registrar(email):
         return True
     return False
 
+def update_new_password(id, new_password):
+    sql = f"""
+    UPDATE registrar
+    SET password = '{new_password}'
+    WHERE id = '{id}'
+    """
+    execute(sql)
+
 def get_user_id(email):
     sql = f"""
     SELECT id 

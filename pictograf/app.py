@@ -235,3 +235,17 @@ def edit_profile():
         return redirect("/profile")
 
     return render_template("edit_profile.html")
+
+
+@app.route("/settings", methods=["POST", "GET"])
+def settings():
+    if not "id" in session:
+        return redirect("/")
+    
+    if request.method == "POST":
+        new_password = request.form["new_password"]
+        db.update_new_password(session["id"], md5(new_password))
+
+        return redirect("/profile")
+
+    return render_template("settings.html")
