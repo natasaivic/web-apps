@@ -52,6 +52,17 @@ def update_new_password(id, new_password):
     """
     execute(sql)
 
+def match_old_password(id, old_password):
+    sql = f"""
+    SELECT password
+    FROM registrar
+    WHERE id = {id}
+    """
+    result =  query(sql)
+    if result == old_password:
+        return True
+    return False
+
 def get_user_id(email):
     sql = f"""
     SELECT id 

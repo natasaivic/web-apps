@@ -243,9 +243,14 @@ def settings():
         return redirect("/")
     
     if request.method == "POST":
-        new_password = request.form["new_password"]
-        db.update_new_password(session["id"], md5(new_password))
-
-        return redirect("/profile")
+        old_password = request.form["old_password"]
+        match = db.match_old_password(session["id"], md5(old_password))
+        if match is True:
+            new_password = request.form["new_password"]
+            new_password_re_enter = request.form["new_password_re_enter"]
+            if new_password == new_password_re_enter:
+                db.update_new_password(session["id"], md5(new_password))
+        else:
+            return redirect("/profile")
 
     return render_template("settings.html")
