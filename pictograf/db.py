@@ -59,7 +59,8 @@ def match_old_password(id, old_password):
     WHERE id = {id}
     """
     result =  query(sql)
-    if result == old_password:
+    print(result)
+    if result[0][0] == old_password:
         return True
     return False
 

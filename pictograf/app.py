@@ -251,6 +251,6 @@ def settings():
             if new_password == new_password_re_enter:
                 db.update_new_password(session["id"], md5(new_password))
         else:
-            return redirect("/profile")
+            return redirect("/settings?error=1")
 
     return render_template("settings.html")
