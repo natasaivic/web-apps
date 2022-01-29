@@ -2,26 +2,39 @@
 <html lang="en-US">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="author" content="Natasa Ivic">
-    <meta name="description" content="This page is to set a new profile picture.">
-
-    <title>Set new profile picture</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="/static/style.css" rel="stylesheet">
-    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    {% include 'head.html' %}
 </head>
 
 <body>
-    {% include 'flash_messages.html' %}
+    {% include 'flash_messages.html' %}{% include 'nav.html' %}
+    <hr>
 
-    <form action="/edit_profile" method="POST">
-        <label>Update your personal info</label>
-        <input type="text" name="current_city" placeholder="Enter current city">
-        <input type="text" name="hometown" placeholder="Enter hometown">
-        <textarea type="text" rows="2" cols="10" name="bio" placeholder="Write something about you" class="textarea"></textarea>
-        <input type="submit" value="Submit">
-        <a href="/profile">Cancel</a>
-    </form>
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            <div class="_6luv _52jv">
+                <form action="/edit_profile" method="POST" onsubmit="">
+                    <h1 class="h3 mb-3 fw-normal">Edit profile info</h1>
+                    <div>Update your personal info:</div>
+                    <div class="_6lux form-floating">
+                        <input type="text" name="current_city" class="form-control" id="floatingCity" placeholder="Enter current city">
+                        <label for="floatingCity">Current city</label>
+                    </div>
+                    <div class="_6lux form-floating">
+                        <input type="text" name="hometown" class="form-control" id="floatingCity" placeholder="Enter hometown">
+                        <label for="floatingCity">Hometown</label>
+                    </div>
+                    <div class="_6lux form-floating">
+                        <textarea type="text" rows="2" cols="10" name="bio" placeholder="Write something about you" class="textarea"></textarea>
+                    </div>
+                    <div class="_6lux">
+                        <button name="save_new_geolocation" type="submit" value="Submit" class="w-100 btn btn-lg btn-primary">Save</button>
+                    </div>
+                    <br>
+                    <a href="/profile">Go back to profile</a>
+                </form>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
 </body>
