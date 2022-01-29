@@ -4,7 +4,7 @@ import logging
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from flask import session
+from flask import session, flash
 import hashlib
 from datetime import datetime
 
@@ -97,7 +97,8 @@ def profile():
 
     info = db.get_info_by_user(session["id"])
     print(info)
-    return render_template("profile.html", posts=posts, post_comments=post_comments, info = info)
+
+    return render_template("profile.html", posts=posts, post_comments=post_comments, info=info)
 
 @app.route("/comment/<int:post_id>", methods=["POST"])
 def comment(post_id):
@@ -109,7 +110,7 @@ def comment(post_id):
 
         user_id = session["id"]
         created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
-        db.save_new_comment(user_id, post_id, comment, created_on)
+        result = db.save_new_comment(user_id, post_id, comment, created_on)
     
     return redirect(request.referrer)
 
@@ -228,10 +229,27 @@ def edit_profile():
     
     if request.method == "POST":
         current_city = request.form["current_city"]
-        hometown = request.form["hometown"]
-        bio = request.form["bio"]
-        db.save_info(session["id"], current_city, hometown, bio)
+        if current_city == "":
+            flash("City cannot be empty", 'warning')
+            return redirect("/edit_profile")
 
+        hometown = request.form["hometown"]
+        if current_city == "":
+            flash("Hometown cannot be empty", 'warning')
+            return redirect("/edit_profile")
+
+        bio = request.form["bio"]
+        if bio == "":
+            flash("Bio cannot be empty", 'warning')
+            return redirect("/edit_profile")
+
+        try:
+            db.save_info(session["id"], current_city, hometown, bio)
+            flash("Profile updated", "info")
+        except:
+            flash("Profile could not be saved", 'warning')
+            return redirect("/profile")
+        
         return redirect("/profile")
 
     return render_template("edit_profile.html")
@@ -249,8 +267,10 @@ def settings():
             new_password = request.form["new_password"]
             new_password_re_enter = request.form["new_password_re_enter"]
             if new_password == new_password_re_enter:
+                flash("Data updated")
                 db.update_new_password(session["id"], md5(new_password))
         else:
-            return redirect("/settings?error=1")
+            flash("Error saving the data", 'warning')
+            return redirect("/settings")
 
     return render_template("settings.html")

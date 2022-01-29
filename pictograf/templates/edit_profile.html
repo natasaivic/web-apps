@@ -14,6 +14,8 @@
 </head>
 
 <body>
+    {% include 'flash_messages.html' %}
+
     <form action="/edit_profile" method="POST">
         <label>Update your personal info</label>
         <input type="text" name="current_city" placeholder="Enter current city">
