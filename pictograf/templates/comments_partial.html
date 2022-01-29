@@ -1,0 +1,5 @@
+{% for comment in comments %}
+<li>
+    <a href="/profile"><img class="rounded-circle nav-pic" src="/static/profile-pics/{{comment[1]}}.jpg"></a> {{comment[3]}} | {{comment[2]}} | <a href="/delete/{{comment[0]}}" onclick="return confirm('Are you sure?')">delete comment</a>
+</li>
+{% endfor %}

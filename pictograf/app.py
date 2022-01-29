@@ -90,7 +90,7 @@ def profile():
         return redirect("/")
 
     posts = db.get_posts_by_user(session["id"])
-    
+
     post_comments = {}
     for post in posts:
         post_comments[post[0]] = db.get_comments_by_post(post[0])
@@ -99,6 +99,7 @@ def profile():
     print(info)
 
     return render_template("profile.html", posts=posts, post_comments=post_comments, info=info)
+
 
 @app.route("/comment/<int:post_id>", methods=["POST"])
 def comment(post_id):
@@ -111,13 +112,31 @@ def comment(post_id):
         user_id = session["id"]
         created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
         result = db.save_new_comment(user_id, post_id, comment, created_on)
-    
+
     return redirect(request.referrer)
+
+
+@app.route("/comment_ajax/<int:post_id>", methods=["POST"])
+def comment_ajax(post_id):
+    if not 'id' in session:
+        return redirect("/")
+
+    if request.method == "POST":
+        comment = request.form["comment"]
+
+        user_id = session["id"]
+        created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
+        db.save_new_comment(user_id, post_id, comment, created_on)
+        comments = db.get_comments_by_post(post_id)
+
+        return render_template("comments_partial.html", comments=comments)
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
     db.delete_comment(id)
     return redirect("/profile")
+
 
 @app.route("/feed")
 def feed():
@@ -130,7 +149,6 @@ def feed():
     post_comments = {}
     for post in posts:
         post_comments[post[5]] = db.get_comments_by_post(post[5])
-
 
     return render_template("feed.html", posts=posts, post_comments=post_comments)
 
@@ -158,7 +176,7 @@ def post():
         user_id = session["id"]
         caption = request.form["caption"]
         create_on = datetime.now().strftime("%A, %B %d. %Y at %H:%M")
-        db.save_new_post(user_id, file_name, caption, create_on)      
+        db.save_new_post(user_id, file_name, caption, create_on)
         logging.info("Post saved.")
 
         logging.debug(image)
@@ -187,7 +205,7 @@ def user_profile(user_id):
     first_name = db.get_profile_first_name(user_id)
     last_name = db.get_profile_last_name(user_id)
     profile_pic = db.get_profile_profile_pic(user_id)
-    
+
     post_comments = {}
     for post in posts:
         post_comments[post[0]] = db.get_comments_by_post(post[0])
@@ -210,7 +228,7 @@ def edit_profile_pic():
 
     if request.method == "POST" and request.files:
         image = request.files["image"]
-            
+
         file_name = f"{session['id']}.jpg"
         file_full_path = os.path.join(f"static/profile-pics/{file_name}")
         image.save(file_full_path)
@@ -218,7 +236,7 @@ def edit_profile_pic():
         db.update_profile_pic(session['id'], file_name)
 
         return redirect("/profile")
-    
+
     return render_template("edit_profile_pic.html")
 
 
@@ -226,7 +244,7 @@ def edit_profile_pic():
 def edit_profile():
     if not "id" in session:
         return redirect("/")
-    
+
     if request.method == "POST":
         current_city = request.form["current_city"]
         if current_city == "":
@@ -249,7 +267,7 @@ def edit_profile():
         except:
             flash("Profile could not be saved", 'warning')
             return redirect("/profile")
-        
+
         return redirect("/profile")
 
     return render_template("edit_profile.html")
@@ -259,7 +277,7 @@ def edit_profile():
 def settings():
     if not "id" in session:
         return redirect("/")
-    
+
     if request.method == "POST":
         old_password = request.form["old_password"]
         match = db.match_old_password(session["id"], md5(old_password))
