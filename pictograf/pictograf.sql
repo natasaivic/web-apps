@@ -39,3 +39,8 @@ CREATE TABLE personal_info (
     hometown TEXT NOT NULL,
     bio TEXT NOT NULL
 );
+
+CREATE TABLE likes (
+    user_id INTEGER NOT NULL,
+    post_id INTEGER NOT NULL
+);

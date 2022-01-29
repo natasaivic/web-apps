@@ -95,10 +95,14 @@ def profile():
     for post in posts:
         post_comments[post[0]] = db.get_comments_by_post(post[0])
 
+    post_likes = {}
+    for post in posts:
+        post_likes[post[0]] = db.get_likes_by_post(post[0])
+    
     info = db.get_info_by_user(session["id"])
     print(info)
 
-    return render_template("profile.html", posts=posts, post_comments=post_comments, info=info)
+    return render_template("profile.html", posts=posts, post_comments=post_comments, info=info, post_likes=post_likes)
 
 
 @app.route("/comment/<int:post_id>", methods=["POST"])
@@ -292,3 +296,18 @@ def settings():
             return redirect("/settings")
 
     return render_template("settings.html")
+
+
+@app.route("/addlike/<post_id>", methods=["POST"])
+def addlike(post_id):
+    if not "id" in session:
+        return "", 400
+    
+    if request.method == "POST":
+        user_id = session["id"]
+        like_exists = db.check_like(user_id, post_id)
+        if like_exists == False:
+            db.add_like(user_id, post_id)
+            return "", 200
+
+    return "", 400

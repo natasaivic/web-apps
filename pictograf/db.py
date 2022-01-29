@@ -206,9 +206,46 @@ def get_comments_by_post(post_id):
     result = query(sql)
     return result
 
+def get_likes_by_post(post_id):
+    sql = f"""
+    SELECT COUNT(*)
+    FROM likes 
+    WHERE post_id='{post_id}'
+    """
+    result = query(sql)
+    return result[0][0]
+
 def delete_comment(id):
     sql = f"""
     DELETE FROM comments
     WHERE id={id}
+    """
+    execute(sql)
+
+def check_like(user_id, post_id):
+    sql = f"""
+    SELECT COUNT(*) 
+    FROM likes
+    WHERE user_id = {user_id}
+    AND post_id = {post_id}
+    """
+    result = query(sql)
+    if result[0][0] == 0:
+        return False
+    return True
+
+def add_like(user_id, post_id):
+    sql = f"""
+    INSERT INTO likes
+    (user_id, post_id)
+    VALUES
+    ('{user_id}', '{post_id}')
+    """
+    execute(sql)
+
+def remove_like(user_id, post_id):
+    sql = f"""
+    DELETE FROM likes
+    WHERE user_id = '{user_id}' AND post_id = '{post_id}'
     """
     execute(sql)

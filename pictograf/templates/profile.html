@@ -41,7 +41,7 @@
                     <li>
                         <div><i class="create_on">{{post[3]}}</i></div>
                         <img class="post" src="/static/files/{{post[1]}}">
-                        <br> {{post[2]}}
+                        <br> {{post[2]}} | <b id="likes-of-{{post[0]}}"> {{post_likes[post[0]]}} </b> likes | <a href="javascript:;" onclick="addLike({{post[0]}})">+1</a>
                         <br> {% if post_comments[post[0]]|count == 0 %}
                         <form action="/comment/{{post[0]}}" method="POST">
                             <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
@@ -98,21 +98,18 @@
         </div>
     </div>
     <script>
-        function sendComment(comment, post_id) {
-    	    $.ajax({
-	            method: 'POST',
-                url: "/comment_ajax/" + post_id,
-                data: {
-                    comment: comment;
-                },
-                success: function (result) {
-                    $("#comments-of-" + post_id).html(result);
-                },
-                error: function () {
-                    alert("Comment not successful, try again");
-                }
-          });
-        }
+    
+    function addLike(post_id) {
+        $.ajax({
+            method: 'POST',
+            url: "/addlike/" + post_id,
+            success: function (result) {
+                var old_val = parseInt($("#likes-of-" + post_id).html());
+                $("#likes-of-" + post_id).html(old_val + 1);
+            }
+        });
+    }
+
     </script>
 </body>
 
