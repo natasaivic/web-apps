@@ -125,15 +125,13 @@ def comment_ajax(post_id):
     if not 'id' in session:
         return redirect("/")
 
-    if request.method == "POST":
-        comment = request.form["comment"]
+    comment = request.form["comment"]
+    user_id = session["id"]
+    created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
 
-        user_id = session["id"]
-        created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
-        db.save_new_comment(user_id, post_id, comment, created_on)
-        comments = db.get_comments_by_post(post_id)
-
-        return render_template("comments_partial.html", comments=comments)
+    db.save_new_comment(user_id, post_id, comment, created_on)
+    comments = db.get_comments_by_post(post_id)
+    return render_template("comments_partial.html", comments=comments)
 
 
 @app.route("/delete/<int:id>")
@@ -309,5 +307,19 @@ def addlike(post_id):
         if like_exists == False:
             db.add_like(user_id, post_id)
             return "", 200
+
+    return "", 400
+
+
+@app.route("/unlike/<post_id>", methods=["POST"])
+def unlike(post_id):
+    if not "id" in session:
+        return "", 400
+    
+    user_id = session["id"] 
+    like_exists = db.check_like(user_id, post_id)
+    if like_exists == True:
+        db.remove_like(user_id, post_id)
+        return "", 200
 
     return "", 400
