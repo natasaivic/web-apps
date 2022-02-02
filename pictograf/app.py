@@ -188,6 +188,17 @@ def post():
     return render_template("post.html")
 
 
+@app.route("/delete_post/<post_id>")
+def delete_post(post_id):
+    if not "id" in session:
+        return redirect("/")
+    
+    db.remove_post(post_id)
+    db.remove_comments(post_id)
+    db.remove_likes(post_id)
+    return redirect("/profile")
+
+
 @app.route("/logout")
 def logout():
     session.pop("id", None)

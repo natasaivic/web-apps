@@ -21,7 +21,7 @@
                     <li>
                         <div><i class="create_on">{{post[3]}}</i></div>
                         <img class="post" src="/static/files/{{post[1]}}">
-                        <br> {{post[2]}} | <b id="likes-of-{{post[0]}}"> {{post_likes[post[0]]}} </b> likes | <a href="{{post[0]}}" class="addlike_class">+1</a> | <a href="{{post[0]}}" class="removelike_class">-1</a>
+                        <br> {{post[2]}} | <b id="likes-of-{{post[0]}}"> {{post_likes[post[0]]}} </b> likes | <a href="{{post[0]}}" class="addlike_class">+1</a> | <a href="{{post[0]}}" class="removelike_class">-1</a> | <a href="/delete_post/{{post[0]}}">Delete post</a>
                         <br> {% if post_comments[post[0]]|count == 0 %}
                         <form action="/comment/{{post[0]}}" method="POST">
                             <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
@@ -66,7 +66,7 @@
                 <!-- Load more -->
                 <div id="more-content">
                 </div>
-                
+
                 <button type="submit" id="load-more" class="w-100 btn btn-block btn-light">Load more</button>
             </div>
 

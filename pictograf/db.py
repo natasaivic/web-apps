@@ -222,6 +222,27 @@ def delete_comment(id):
     """
     execute(sql)
 
+def remove_post(post_id):
+    sql = f"""
+    DELETE FROM posts
+    WHERE id={post_id}
+    """
+    execute(sql)
+
+def remove_comments(post_id):
+    sql = f"""
+    DELETE FROM comments
+    WHERE post_id = {post_id}
+    """
+    execute(sql)
+
+def remove_likes(post_id):
+    sql = f"""
+    DELETE FROM likes
+    WHERE post_id = {post_id}
+    """
+    execute(sql)
+
 def check_like(user_id, post_id):
     sql = f"""
     SELECT COUNT(*) 
