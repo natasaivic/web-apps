@@ -4,16 +4,24 @@
 {% include 'head.html' %}
 
 <body>
-    <div>
-        <form action="/post" method="POST" enctype="multipart/form-data">
-            <label>Select image</label>
-            <input type="file" name="image" id="image">
-            <textarea rows="8" cols="50" name="caption" placeholder="Type caption" required></textarea>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+    {% include 'nav.html' %}
+    <hr>
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            <div class="_6luv _52jv">
+                <form action="/post" method="POST" enctype="multipart/form-data">
+                    <label>Select image</label>
+                    <input type="file" name="image" id="image">
+                    <textarea rows="8" cols="40" name="caption" placeholder="Type caption" required></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
 
-    <a href="/profile">Back to profile</a>
+            <a href="/profile">Back to profile</a>
+        </div>
+        <div class="col"></div>
+    </div>
 </body>
 
 </html>
