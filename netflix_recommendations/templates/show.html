@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+{% include "parts/head.html" %}
+
+<body>
+    <div class="container">
+        {% include "parts/header.html" %}
+
+        <!-- id, show_id, type, title, director, cast, release_year, listed_in, description  -->
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6 text-center">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold lh-1 mb-3">{{show['title']}}</h1>
+                    <p class="lead">
+                        {{show['description'][0:750]}}...
+                        <br> <a href="https://en.wikipedia.org/wiki/{{show['title']}}" target="_blank">read more on Wikipedia</a> <i class="bi bi-box-arrow-up-right"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- similar shows -->
+        <div class="px-1 py-1 my-1 text-center">
+            <h1 class="display-5 fw-bold">You may also like</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Here is a list of similar shows that you may also like</p>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+            {% for show in similar_shows %}
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white rounded-5 shadow-lg" style="background-color: rgba({{range(0, 56)|random}}, {{range(0, 56)|random}}, {{range(0, 56)|random}}, 0.4);">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <a href="/show/{{show['id']}}" style="text-decoration: none; color: rgb(80, 57, 57);">
+                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{show['title']}}</h2>
+                        </a>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <small>{{show['cast']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center me-3">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                                <small>Release Year: {{show['release_year']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                                <small>{{show['type']}}</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- similar shows -->
+
+        {% include "parts/footer.html" %}
+    </div>
+</body>
+
+</html>

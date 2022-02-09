@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+{% include "parts/head.html" %}
+
+<body>
+    <div class="container">
+        {% include "parts/header.html" %}
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6 text-center">
+                    <img src="{{book['coverImg']}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+                    <a href="https://www.amazon.com/s?k={{book['title']}}+{{book['author']}}" target="_blank"><i class="bi bi-bag-fill"></i> Buy on Amazon</a> |
+                    <a href="https://www.goodreads.com/book/show/{{book['book_id']}}" target="_blank"><i class="bi bi-bookmark-heart-fill"></i> Follow on Goodreads</a>
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold lh-1 mb-3">{{book['title']}}</h1>
+                    <p class="lead">
+                        {{book['description'][0:750]}}...
+                        <br> <a href="https://www.goodreads.com/book/show/{{book['book_id']}}" target="_blank">read more</a> <i class="bi bi-box-arrow-up-right"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- similar books -->
+        <div class="px-1 py-1 my-1 text-center">
+            <h1 class="display-5 fw-bold">You may also like</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Here is a list of similar reads that you may also like</p>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+            {% for similar_book in similar_books %}
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9) ), url('{{similar_book['coverImg']}}') center center no-repeat;">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <a href="/book/{{similar_book['id']}}" style="text-decoration: none; color: white;">
+                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{similar_book['title'][0:30]}}</h2>
+                        </a>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <small>{{similar_book['author']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center me-3">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                                <small>Ratings: {{similar_book['numRatings']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                                <small>{{similar_book['publishDate']}}</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- similar books -->
+
+        {% include "parts/footer.html" %}
+    </div>
+</body>
+
+</html>

@@ -110,12 +110,11 @@ def comment(post_id):
     if not 'id' in session:
         return redirect("/")
 
-    if request.method == "POST":
-        comment = request.form["comment"]
+    comment = request.form["comment"]
+    user_id = session["id"]
+    created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
 
-        user_id = session["id"]
-        created_on = datetime.now().strftime("%b %d. %Y at %H:%M")
-        result = db.save_new_comment(user_id, post_id, comment, created_on)
+    db.save_new_comment(user_id, post_id, comment, created_on)
 
     return redirect(request.referrer)
 
