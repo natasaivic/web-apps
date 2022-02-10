@@ -1,3 +1,4 @@
+from click import prompt
 import db
 import csv
 import pandas as pd
@@ -13,6 +14,8 @@ def write_recs_to_csv(result):
 
 
 def main():
+    prompt("Continue? ")
+
     print("Creating data frame")
     data = db.get_all_books()
     main_df = pd.DataFrame(data, columns=[
@@ -48,14 +51,14 @@ def main():
         similar_books = sorted(similar_books, key=lambda x: x[1], reverse=True)
 
         # once we have ordered the similarities we want to take the top 20
-        similar_book_locs = []
+        similar_book_ids = []
         for loc, similarity in similar_books[1:21]:
             if similarity > 0:
-                similar_book_locs.append(loc)
+                similar_book_ids.append(str(main_df.iloc[loc]['id']))
 
         # collect the results into one big dictionary
         # this will join all ints into a comma separated string [1,2,3] -> "1,2,3"
-        result[book_id] = ",".join(str(main_df.iloc[loc]['id']) for loc in similar_book_locs)
+        result[book_id] = ",".join(similar_book_ids)
 
     # once we are done with iterating, take the big dictionary and write the contents into a CSV file
     print("Writing results into CSV")
@@ -66,14 +69,15 @@ def main():
 
     print("Recommendations are ready and saved inside database/recs.csv file")
     print("To import into database, do next steps:")
-    print("1. Open sqlite3 database, sqlite3 database/bookrec.db")
+    print("1. Open sqlite3 database:")
+    print("   sqlite3 database/bookrec.db")
     print("2. Delete previous recommendations by running SQL:")
-    print("  2a. delete from recs;")
+    print("   delete from recs;")
     print("3. Import data")
-    print("  3a. .mode csv")
-    print("  3b. .import database/recs.csv recs")
+    print("   .mode csv")
+    print("   .import database/recs.csv recs")
     print("4. Verify that the data is imported:")
-    print("  4a. select * from recs limit 10;")
+    print("   select * from recs limit 10;")
 
 
 # start the main function when this file is ran directly from python3 interpreter

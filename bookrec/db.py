@@ -82,11 +82,27 @@ def get_similar_books(book_id, limit):
     return similar_books
 
 
-def get_all_books():
+def get_all_books(limit=50000):
     sql = f"""
         select id, title, description, rating, pages, numRatings 
         from books 
-        limit 50000
+        limit {limit}
     """
     books = query(sql)
     return books
+
+
+def search_books(search_query, limit):
+    sql = f"""
+        select * 
+        from books 
+        where title like '%{search_query}%'
+        order by numRatings desc 
+        limit {limit}
+    """
+    results = query(sql)
+    if len(results) == 0:
+        return []
+
+    return results
+

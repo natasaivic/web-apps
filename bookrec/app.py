@@ -28,3 +28,17 @@ def book(book_id):
     book = db.get_book_info(book_id)
     similar_books = db.get_similar_books(book_id, 6)
     return render_template("book.html", book=book, similar_books=similar_books)
+
+
+@app.route("/search")
+def search():
+    # find books that match the search cirteria
+    query = request.args.get('query')
+    search_results = db.search_books(query, 12)
+
+    if len(search_results) < 12 and len(search_results) > 0:
+        # bug here, make sure there is no duplicates
+        similar_results = db.get_similar_books(search_results[0]['id'], 12 - len(search_results))
+        search_results += similar_results
+
+    return render_template("search.html", search_results=search_results, query=query)

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+{% include "parts/head.html" %}
+
+<body>
+    <div class="container">
+        {% include "parts/header.html" %}
+        <span>
+            <span></span>
+        </span>
+
+        {% include "parts/search_form.html" %}
+
+        <!-- search results -->
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+            {% for book in search_results %}
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9) ), url('{{book['coverImg']}}') center center no-repeat;">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <a href="/book/{{book['id']}}" style="text-decoration: none; color: white;">
+                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{book['title'][0:30]}}</h2>
+                        </a>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <small>{{book['author']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center me-3">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                                <small>Ratings: {{book['numRatings']}}</small>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                                <small>{{book['publishDate']}}</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- search results -->
+
+        {% include "parts/footer.html" %}
+    </div>
+</body>
+
+</html>
