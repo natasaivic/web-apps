@@ -12,6 +12,11 @@ pets = [
             {"id": 4, "name": "Mr. Furrkins", "age": "5 years", "bio": "Probably napping."}, 
         ]
 
+users = [
+            {"id": 1, "full_name": "Pet Rescue Team", "email": "team@pawsrescue.co", "password": "adminpass"},
+        ]
+
+
 @app.route("/")
 def home():
     return render_template("home.html", pets=pets)
@@ -31,6 +36,11 @@ def pet_details(pet_id):
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     form = SignupForm()
+    if form.validate_on_submit():
+        new_user = {"id": len(users)+1, "full_name": form.full_name.data, "email": form.email.data, "password": form.password.data}
+        users.append(new_user)
+        return render_template("signup.html", message = "Successfully signed up")
+    
     return render_template("signup.html", form=form)
 
 @app.route("/about")
