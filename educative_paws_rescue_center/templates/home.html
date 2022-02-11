@@ -1,39 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>Home - Paws Rescue Center</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
-
-</head>
-
-<body>
-    <h1 style='text-align: center;'>Paws Rescue Center 🐾</h1>
-    <table>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Bio</th>
-        </tr>
-        {% for pet in pets %}
-        <tr>
-            <td>
-                <a href="{{url_for('pet_details', pet_id=pet['id'])}}">
-                    <img src="{{url_for('static', filename=pet['id']|string+'.jpeg')}}" height="100">
-                </a>
-            </td>
-            <td>{{pet["name"]}}</td>
-            <td>{{pet["age"]}}</td>
-            <td>{{pet["bio"]}}</td>
-        </tr>
-        {% endfor %}
+{% extends "base.html" %} {% block title %} Home - Paws Rescue Center {% endblock %} {% block content %} {% block heading%}Paws Rescue Center 🐾{% endblock %}
+<table>
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Bio</th>
+    </tr>
+    {% for pet in pets %}
+    <tr>
+        <td>
+            <a href="{{url_for('pet_details', pet_id=pet['id'])}}">
+                <!-- <a href="/details/{{pet['id']}}"> -->
+                <img src="{{url_for('static', filename=pet['id']|string+'.jpeg')}}" height="100"></a>
+        </td>
+        <td>{{pet["name"]}}</td>
+        <td>{{pet["age"]}}</td>
+        <td>{{pet["bio"]}}</td>
+    </tr>
+    {% endfor %}
 
 
-    </table>
-</body>
-
-</html>
+</table>
+{% endblock %}

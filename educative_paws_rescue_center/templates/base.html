@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Home - Paws Rescue Center</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+
+    <title>{% block title %}
+        <!-- Placeholder for Title -->{% endblock %} </title>
+</head>
+
+<body>
+    <h1 style='text-align: center;'>{% block heading %}
+        <!-- Placeholder for Heading -->{% endblock %}</h1>
+    {% block content %}
+    <!-- Placeholder for Page Content -->
+    {% endblock %}
+</body>
+
+</html>
