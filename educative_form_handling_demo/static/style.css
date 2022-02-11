@@ -1,0 +1,15 @@
+#header {
+    padding: 30px;
+    text-align: center;
+    background: #684961;
+    color: white;
+    font-size: 40px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline;
+}

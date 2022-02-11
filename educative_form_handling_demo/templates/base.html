@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+</html>
+
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+    <title>{% block title %}{% endblock %} - Forms Demo</title>
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+    <div>
+        <ul>
+            <li><a href="{{url_for('home')}}"><b>Home</b></a></li>
+            <li><a href="{{url_for('login')}}"><b>Login</b></a></li>
+        </ul>
+    </div>
+    <div id="header"> Forms handling demo </div>
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+
+</html>
