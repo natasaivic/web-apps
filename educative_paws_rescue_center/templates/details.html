@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block heading %}Home - Paws Rescue Center{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %} {{pet["name"]}}'s Details {% endblock %} {% block content %}
 
 <div style="float:left; border-style:double;">
     <img src="{{url_for('static', filename=pet['id']|string+'.jpeg')}}" height='350'>
