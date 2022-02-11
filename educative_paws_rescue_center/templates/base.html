@@ -11,6 +11,13 @@
 </head>
 
 <body>
+    <div>
+        <ul style="list-style-type: none;float: right;font-size: large;">
+            <li style="display:inline"><a href="{{url_for('home')}}">Home</a></li>
+            <li style="display:inline"><a href="{{url_for('about')}}">About</a></li>
+            <li style="display:inline"><a href="{{url_for('signup')}}">Sign Up</a></li>
+        </ul>
+    </div>
     <h1 style='text-align: center;'>{% block heading %}
         <!-- Placeholder for Heading -->{% endblock %}</h1>
     {% block content %}

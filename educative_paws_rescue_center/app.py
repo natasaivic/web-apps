@@ -1,6 +1,8 @@
 from flask import Flask, render_template, abort
+from forms import SignupForm
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'dfewfew123213rwdsgert34tgfd1234trgf'
 
 """Information regarding the Pets in the System."""
 pets = [
@@ -26,6 +28,10 @@ def pet_details(pet_id):
     
     return render_template("details.html", pet=pet)
 
+@app.route("/signup", methods=["POST", "GET"])
+def signup():
+    form = SignupForm()
+    return render_template("signup.html", form=form)
 
 @app.route("/about")
 def about():
