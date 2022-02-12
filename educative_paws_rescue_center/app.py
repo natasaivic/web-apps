@@ -1,9 +1,31 @@
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, abort
 from forms import SignupForm, LoginForm
 from flask import session, redirect, url_for
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dfewfew123213rwdsgert34tgfd1234trgf'
+# We will have to set a configuration variable in the application so that the application knows where the database file is located.
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pawsrescuecenter.db'
+# initialize the database connection:
+database = SQLAlchemy(app)
+
+
+class User(database.Model):
+    email = database.Column(database.String, primary_key=True, unique=True, nullable=False)
+    password = database.Column(database.String, nullable=False)
+
+# Data types: 
+# Integer
+# String(size)
+# Text
+# DateTime
+# Float
+# Boolean
+# PickleType
+# LargeBinary
+
+database.create_all()
 
 """Information regarding the Pets in the System."""
 pets = [
