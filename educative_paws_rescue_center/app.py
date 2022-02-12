@@ -1,5 +1,6 @@
 from flask import Flask, render_template, abort
-from forms import SignupForm
+from forms import SignupForm, LoginForm
+from flask import session, redirect, url_for
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dfewfew123213rwdsgert34tgfd1234trgf'
@@ -21,7 +22,6 @@ users = [
 def home():
     return render_template("home.html", pets=pets)
 
-
 @app.route("/details/<int:pet_id>")
 def pet_details(pet_id):
     pet = None
@@ -42,6 +42,28 @@ def signup():
         return render_template("signup.html", message = "Successfully signed up")
     
     return render_template("signup.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = None
+        for record in users:
+            if record["email"] == form.email.data and record["password"] == form.password.data:
+                user = record
+        if user is None:
+            return render_template("login.html", form = form, message = "Wrong Credentials. Please Try Again.")
+        else:
+            session['user'] = user
+            return render_template("login.html", message = "Successfully Logged In!")
+    
+    return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():
+    if 'user' in session:
+        session.pop('user')
+    return redirect(url_for('home', _scheme='https', _external=True))
 
 @app.route("/about")
 def about():
