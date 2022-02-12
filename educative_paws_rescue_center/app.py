@@ -1,20 +1,20 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, abort
 from forms import SignupForm, LoginForm
 from flask import session, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dfewfew123213rwdsgert34tgfd1234trgf'
-# We will have to set a configuration variable in the application so that the application knows where the database file is located.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pawsrescuecenter.db'
+# We will have to set a configuration variable in the application so that the application knows where the database file is located. 
+# We initialized the database by setting the config variable 'SQLALCHEMY_DATABASE_URI' to an SQLite database with the name paws.db
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://./pawsrescuecenter.db'
 # initialize the database connection:
+# we created the db object of the SQLAlchemy class
 database = SQLAlchemy(app)
-
 
 class User(database.Model):
     email = database.Column(database.String, primary_key=True, unique=True, nullable=False)
     password = database.Column(database.String, nullable=False)
-
 # Data types: 
 # Integer
 # String(size)
@@ -25,6 +25,22 @@ class User(database.Model):
 # PickleType
 # LargeBinary
 
+# we created our first model: Pet
+class Pet(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    name = database.Column(database.String, unique=True)
+    age = database.Column(database.String)
+    bio = database.Column(database.String)
+    user_name = database.Column(database.String, database.ForeignKey('user.id'))
+
+class User(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    full_name = database.Column(database.String)
+    email = database.Column(database.String, unique=True)
+    password = database.Column(database.String)
+    pets = database.relationship('Pet', backref='user')
+
+#  back-reference will enable us to point to a row in User by using pet.user
 database.create_all()
 
 """Information regarding the Pets in the System."""
