@@ -7,14 +7,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dfewfew123213rwdsgert34tgfd1234trgf'
 # We will have to set a configuration variable in the application so that the application knows where the database file is located. 
 # We initialized the database by setting the config variable 'SQLALCHEMY_DATABASE_URI' to an SQLite database with the name paws.db
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://./pawsrescuecenter.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pawsrescuecenter.db'
 # initialize the database connection:
 # we created the db object of the SQLAlchemy class
 database = SQLAlchemy(app)
 
-class User(database.Model):
-    email = database.Column(database.String, primary_key=True, unique=True, nullable=False)
-    password = database.Column(database.String, nullable=False)
+# class User(database.Model):
+#     email = database.Column(database.String, primary_key=True, unique=True, nullable=False)
+#     password = database.Column(database.String, nullable=False)
 # Data types: 
 # Integer
 # String(size)
@@ -42,6 +42,30 @@ class User(database.Model):
 
 #  back-reference will enable us to point to a row in User by using pet.user
 database.create_all()
+
+# Create "team" user and add it to session
+team = User(full_name = "Pet Rescue Team", email = "team@petrescue.co", password = "adminpass")
+database.session.add(team)
+
+# Create all pets
+nelly = Pet(name = "Nelly", age = "5 weeks", bio = "I am a tiny kitten rescued by the good people at Paws Rescue Center. I love squeaky toys and cuddles.")
+yuki = Pet(name = "Yuki", age = "8 months", bio = "I am a handsome gentle-cat. I like to dress up in bow ties.")
+basker = Pet(name = "Basker", age = "1 year", bio = "I love barking. But, I love my friends more.")
+mrfurrkins = Pet(name = "Mr. Furrkins", age = "5 years", bio = "Probably napping.")
+
+# Add all pets to the session
+database.session.add(nelly)
+database.session.add(yuki)
+database.session.add(basker)
+database.session.add(mrfurrkins)
+
+# Commit changes in the session
+try:
+    database.session.commit()
+except Exception as e: 
+    database.session.rollback()
+finally:
+    database.session.close()
 
 """Information regarding the Pets in the System."""
 pets = [
@@ -75,8 +99,18 @@ def pet_details(pet_id):
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        new_user = {"id": len(users)+1, "full_name": form.full_name.data, "email": form.email.data, "password": form.password.data}
-        users.append(new_user)
+        # new_user = {"id": len(users)+1, "full_name": form.full_name.data, "email": form.email.data, "password": form.password.data}
+        # users.append(new_user)
+        new_user = User(full_name = form.full_name.data, email = form.email.data, password = form.password.data)
+        database.session.add(new_user)
+        try:
+            database.session.commit()
+        except Exception as e:
+            print(e)
+            database.session.rollback()
+            return render_template("signup.html", form = form, message = "This Email already exists in the system! Please Log in instead.")
+        finally:
+            database.session.close()
         return render_template("signup.html", message = "Successfully signed up")
     
     return render_template("signup.html", form=form)
@@ -85,14 +119,17 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = None
-        for record in users:
-            if record["email"] == form.email.data and record["password"] == form.password.data:
-                user = record
+        # user = None
+        # searching the list for the user with the provided credentials
+        # for record in users:
+        #     if record["email"] == form.email.data and record["password"] == form.password.data:
+        #         user = record
+        user = User.query.filter_by(email = form.email.data, password = form.password.data).first()
         if user is None:
             return render_template("login.html", form = form, message = "Wrong Credentials. Please Try Again.")
         else:
-            session['user'] = user
+            # session['user'] = user
+            session['user'] = user.id
             return render_template("login.html", message = "Successfully Logged In!")
     
     return render_template("login.html", form=form)
