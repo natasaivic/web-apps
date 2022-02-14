@@ -3,6 +3,7 @@
 <table>
     <tr>
         <th></th>
+        <th>Image</th>
         <th>Name</th>
         <th>Age</th>
         <th>Bio</th>
@@ -10,13 +11,19 @@
     {% for pet in pets %}
     <tr>
         <td>
-            <a href="{{url_for('pet_details', pet_id=pet['id'])}}">
-                <!-- <a href="/details/{{pet['id']}}"> -->
-                <img src="{{url_for('static', filename=pet['id']|string+'.jpeg')}}" height="100"></a>
+            <!-- <a href="{{url_for('pet_details', pet_id=pet['id'])}}"> -->
+            <!-- <a href="/details/{{pet['id']}}"> -->
+            <!-- <img src="{{url_for('static', filename=pet['id']|string+'.jpeg')}}" height="100"></a> -->
+            <a href="{{url_for('pet_details', pet_id = pet.id)}}">
+                <img src="{{url_for('static', filename = pet.id|string+'.jpg ')}}" height="100"></a>
+
         </td>
-        <td>{{pet["name"]}}</td>
+        <!-- <td>{{pet["name"]}}</td>
         <td>{{pet["age"]}}</td>
-        <td>{{pet["bio"]}}</td>
+        <td>{{pet["bio"]}}</td> -->
+        <td>{{pet.name}}</td>
+        <td>{{pet.age}}</td>
+        <td>{{pet.bio}}</td>
     </tr>
     {% endfor %}
 

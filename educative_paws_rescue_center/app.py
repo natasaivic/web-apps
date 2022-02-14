@@ -1,5 +1,6 @@
+from argparse import ArgumentError
 from flask import Flask, render_template, abort
-from forms import SignupForm, LoginForm
+from forms import SignupForm, LoginForm, EditPetForm
 from flask import session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -36,7 +37,7 @@ class Pet(database.Model):
 class User(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     full_name = database.Column(database.String)
-    email = database.Column(database.String, unique=True)
+    email = database.Column(database.String)
     password = database.Column(database.String)
     pets = database.relationship('Pet', backref='user')
 
@@ -44,7 +45,7 @@ class User(database.Model):
 database.create_all()
 
 # Create "team" user and add it to session
-team = User(full_name = "Pet Rescue Team", email = "team@petrescue.co", password = "adminpass")
+team = User(full_name = "Pet Rescue Team", email = "tpet@petrescue.co", password = "adminpass")
 database.session.add(team)
 
 # Create all pets
@@ -64,36 +65,62 @@ try:
     database.session.commit()
 except Exception as e: 
     database.session.rollback()
+    print(e)
 finally:
     database.session.close()
 
 """Information regarding the Pets in the System."""
-pets = [
-            {"id": 1, "name": "Nelly", "age": "5 weeks", "bio": "I am a tiny kitten rescued by the good people at Paws Rescue Center. I love squeaky toys and cuddles."},
-            {"id": 2, "name": "Yuki", "age": "8 months", "bio": "I am a handsome gentle-cat. I like to dress up in bow ties."},
-            {"id": 3, "name": "Basker", "age": "1 year", "bio": "I love barking. But, I love my friends more."},
-            {"id": 4, "name": "Mr. Furrkins", "age": "5 years", "bio": "Probably napping."}, 
-        ]
+# pets = [
+#             {"id": 1, "name": "Nelly", "age": "5 weeks", "bio": "I am a tiny kitten rescued by the good people at Paws Rescue Center. I love squeaky toys and cuddles."},
+#             {"id": 2, "name": "Yuki", "age": "8 months", "bio": "I am a handsome gentle-cat. I like to dress up in bow ties."},
+#             {"id": 3, "name": "Basker", "age": "1 year", "bio": "I love barking. But, I love my friends more."},
+#             {"id": 4, "name": "Mr. Furrkins", "age": "5 years", "bio": "Probably napping."}, 
+#         ]
 
-users = [
-            {"id": 1, "full_name": "Pet Rescue Team", "email": "team@pawsrescue.co", "password": "adminpass"},
-        ]
+# users = [
+#             {"id": 1, "full_name": "Pet Rescue Team", "email": "team@pawsrescue.co", "password": "adminpass"},
+#         ]
 
 
 @app.route("/")
 def home():
+    pets = Pet.query.all()
     return render_template("home.html", pets=pets)
 
 @app.route("/details/<int:pet_id>")
 def pet_details(pet_id):
-    pet = None
-    for animal in pets:
-        if animal["id"] == pet_id:
-            pet = animal
+    form = EditPetForm()
+    pet = Pet.query.get(pet_id)
+    # pet = None
+    # for animal in pets:
+    #     if animal["id"] == pet_id:
+    #         pet = animal
     if pet is None:
         abort(404, description="No Pet was Found with the given ID")
+    if form.validate_on_submit():
+        pet.name = form.name.data
+        pet.age = form.age.data
+        pet.bio = form.bio.data
+        try:
+            database.session.commit()
+        except Exception as e:
+            database.session.rollback()
+            return render_template("details.html", pet = pet, form = form, message = "A Pet with this name already exists!")
     
-    return render_template("details.html", pet=pet)
+    return render_template("details.html", pet=pet, form=form)
+
+@app.route("/delete/<int:pet_id>")
+def delete_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+    if pet is None: 
+        abort(404, description="No Pet was Found with the given ID")
+    database.session.delete(pet)
+    try:
+        database.session.commit()
+    except Exception as e:
+        database.session.rollback()
+    return redirect(url_for('home', _scheme='https', _external=True))
+
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
