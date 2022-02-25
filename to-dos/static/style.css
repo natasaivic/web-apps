@@ -1,0 +1,90 @@
+#toDos {
+    border: 3px solid rgba(57, 129, 169, 1);
+    border-radius: 10px;
+    width: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#toDos>h1 {
+    margin: 10px 0px 0px 0px;
+    padding: 10px 20px 5px 30px;
+    border-bottom: 1px solid black;
+}
+
+.addToDo {
+    padding: 10px 15px;
+}
+
+#toDoList {
+    padding: 0px;
+    margin: 0px;
+}
+
+#toDoList>li {
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 0px;
+    list-style: none;
+}
+
+#toDoList>li>input[type=checkbox],
+#toDoList>li>label {
+    padding: 5px 10px;
+}
+
+#toDoList>li>input[type=checkbox] {
+    flex: 0;
+}
+
+#toDoList>li>label {
+    flex: 10;
+}
+
+#toDoList>li>input[type=text] {
+    flex: 10;
+    margin: 5px 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+}
+
+#toDoList>li>button {
+    flex: 1;
+    margin: 5px;
+}
+
+.checked>label {
+    text-decoration: line-through;
+}
+
+.addToDo {
+    display: flex;
+    align-items: flex-end;
+}
+
+.addToDo>input[type=text] {
+    flex: 11;
+    border: none;
+    padding: 5px 1px;
+    margin: 0px;
+    font-size: 1em;
+    width: 80%;
+    border-bottom: 2px solid rgb(162, 166, 173);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    transition: border linear 0.5s;
+    webkit-transition: border linear 0.5s;
+}
+
+.addToDo input[type=text]:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(114, 158, 234);
+}
+
+.addToDo>button {
+    margin: 5px 5px 5px 10px;
+    flex: 1;
+}
+
+#toDoList li:nth-child(even) {
+    background-color: rgba(114, 158, 234, 0.3);
+}
