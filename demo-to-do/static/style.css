@@ -25,3 +25,25 @@ p {
     font-size: 25px;
     background-color: aquamarine;
 }
+
+.div1 {
+    max-width: 800px;
+    margin: auto;
+    padding: 10px;
+}
+
+.task {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 18px;
+    margin: 6px 0;
+    overflow: hidden;
+}
+
+.task button {
+    float: right;
+    margin-left: 20px;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+}

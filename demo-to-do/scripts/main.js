@@ -1,13 +1,28 @@
 $(document).ready(function() {
     $("#addTask2").click(function(eventObj) {
-        if ($("#textBox2").val() == "") {
-            alert("Task box is empty. Enter task first. ")
+        if ($("#textBox2").val() != "") {
+            var taskElement = $("<div> </div>")
+            taskElement.addClass("task")
+            taskElement.text($(".textBox2").val())
+
+            var deleteBtnElement = $("<button id='delete'> </button>")
+            deleteBtnElement.addClass("fas fa-trash-alt")
+
+            var doneBtnElement = $("<button id='done'> </button>")
+            doneBtnElement.addClass("fas fa-check")
+
+            taskElement.append(deleteBtnElement, doneBtnElement)
+            $(".notCompleted").append(taskElement)
+
+            /* var listItem = $("#textBox2").val();
+            $(".ord_li").append("<li>" + listItem + "</li>"); */
+
+            $("#textBox2").val(""); // clear out the text box
         } else {
-            var listItem = $("#textBox2").val();
-            $(".ord_li").append("<li>" + listItem + "</li>");
+            alert("Task box is empty. Enter task first. ")
         }
-        $("#textBox2").val("");
     });
+
     // var newListItem = $("<li> Fourth </li>")
 
     // What is the difference between next two blocks? 
