@@ -1,18 +1,27 @@
 $(document).ready(function() {
+    /* $("div").on("click", "#delete", function() {
+        var taskToDelete = $(this).parent()
+        taskToDelete.remove()
+    }); */
+
     $("#addTask2").click(function(eventObj) {
         if ($("#textBox2").val() != "") {
-            var taskElement = $("<div> </div>")
+            var taskElement = $("<div></div>")
             taskElement.addClass("task")
             taskElement.text($(".textBox2").val())
 
-            var deleteBtnElement = $("<button id='delete'> </button>")
-            deleteBtnElement.addClass("fas fa-trash-alt")
+            var deleteBtnElement = $("<button id=\"delete\"></button>");
+            deleteBtnElement.addClass("fas fa-trash-alt delete");
 
             var doneBtnElement = $("<button id='done'> </button>")
             doneBtnElement.addClass("fas fa-check")
 
+            // the new task element, along with its children button elements, is added to the DOM tree
             taskElement.append(deleteBtnElement, doneBtnElement)
             $(".notCompleted").append(taskElement)
+            deleteBtnElement.click(function() {
+                taskElement.remove()
+            });
 
             /* var listItem = $("#textBox2").val();
             $(".ord_li").append("<li>" + listItem + "</li>"); */
