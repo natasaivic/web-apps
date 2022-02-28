@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    $("#addTask2").click(function(eventObj) {
+        if ($("#textBox2").val() == "") {
+            alert("Task box is empty. Enter task first. ")
+        } else {
+            var listItem = $("#textBox2").val();
+            $(".ord_li").append("<li>" + listItem + "</li>");
+        }
+        $("#textBox2").val("");
+    });
     // var newListItem = $("<li> Fourth </li>")
 
     // What is the difference between next two blocks? 
@@ -7,18 +16,18 @@ $(document).ready(function() {
 
     $("li").append("Sixt");
 
-    // Appends at the end, it does not become a part of the list. Not an element created, unless you append with an element tag.  
+    // Appends at the end, it becomes a part of the list. Not an element created, unless you append with an element tag.  
     $("ul").append("<li>55</li>");
     $("#unord_li").append("<li>Fourth</li>");
     $("#unord_li").append("<li>Fifth</li>");
 
-    $(".div1").append("<input id=\"textBox\">");
-    $(".div1").append("<button id=\"addButton\">Add new list item</button>")
+    $(".div2").append("<input id=\"textBox1\" placeholder=\"Enter task here\">");
+    $(".div2").append("<button id=\"addButton1\">Add new list item</button>")
     $("#addButton").click(function(eventObj) {
-        if ($("#textBox").val() == "") {
+        if ($("#textBox1").val() == "") {
             alert("Text Box is empty. Type in new list item.")
         } else {
-            var item = $("#textBox").val();
+            var item = $("#textBox1").val();
             $("ul").append("<li>" + item + "</li>");
         }
         $("#textBox").val("");
