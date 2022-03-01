@@ -1,10 +1,11 @@
 $(document).ready(function() {
-    /* $("div").on("click", "#delete", function() {
-        var taskToDelete = $(this).parent()
-        taskToDelete.remove()
+    /* $("div").on("click", "#delete", function() { //This event handler function is only triggered when a descendant of a div element with id of delete is clicked.
+        var taskToDelete = $(this).parent() //We extract the parent of the delete button, which is the task to be deleted. 
+        taskToDelete.remove() //We delete that extracted parent element using the remove() method.
     }); */
 
     $("#addTask2").click(function(eventObj) {
+
         if ($("#textBox2").val() != "") {
             var taskElement = $("<div></div>")
             taskElement.addClass("task")
@@ -18,9 +19,21 @@ $(document).ready(function() {
 
             // the new task element, along with its children button elements, is added to the DOM tree
             taskElement.append(deleteBtnElement, doneBtnElement)
+
             $(".notCompleted").append(taskElement)
+
             deleteBtnElement.click(function() {
-                taskElement.remove()
+                taskElement.fadeOut(1000, function() {
+                    taskElement.remove()
+                });
+            });
+            doneBtnElement.click(function() {
+                taskElement.fadeOut(1000, function() {
+                    $(".notCompleted").remove(taskElement)
+                });
+                taskElement.fadeIn(1000, function() {
+                    $(".completed").append(taskElement)
+                })
             });
 
             /* var listItem = $("#textBox2").val();
@@ -79,13 +92,13 @@ $(document).ready(function() {
 
     // Hides all list elements
     $("#hide").click(function() {
-        $("li").hide()
+        $("li").hide("slow")
         console.log("Button clicked for hide.")
     });
 
     // Shows all list elements
     $("#show").click(function() {
-        $("li").show()
+        $("li").show("slow")
         console.log("Button clicked for show.")
     });
 
