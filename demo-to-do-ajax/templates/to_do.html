@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <!--Specifying your document's character encoding-->
+    <meta charset="utf-8">
+    <!--Adding an author and description-->
+    <meta name="author" content="Natasa Ivic">
+    <meta name="description" content="This project will add jQuery and Ajax functionality to a &quot;To Do List Demo using Ajax&quot; webpage">
+
+    <title>To Do List Demo using Ajax</title>
+
+    <!--Applying CSS and JavaScript to HTML-->
+    <link href="/static/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css">
+    <!-- Include the jQuery library in our web page -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!-- Linking to an External JavaScript File -->
+    <script type="text/javascript" src="/static/scripts/main.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="textBox" class="textBox" placeholder="Enter task here">
+        <button id="addTask" class="fa fa-plus"></button>
+        <div class="notCompleted">
+            <h2>To do: </h2>
+            <div class="task">
+                {% if tasks|count == 0 %} 
+                    No tasks to show. 
+                {% else %}
+                <ul id="new-todos">
+                    {% for task in tasks %}
+                    <li class="list_item"> 
+                        {{task['task']}} 
+                        <button class="done fas fa-check" todoid="{{task['id']}}"></button> 
+                        <button class="delete fas fa-trash-alt" todoid="{{task['id']}}"></button> 
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="completed">
+            <h2>Done: </h2>
+            <ul id="complete-todos"></ul>
+        </div>
+    </div>
+
+    <a href="#" onclick="load()">load</a>
+</body>
+
+</html>
