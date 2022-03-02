@@ -4,45 +4,64 @@ $(document).ready(function() {
         taskToDelete.remove() //We delete that extracted parent element using the remove() method.
     }); */
 
-    $("#addTask2").click(function(eventObj) {
-
-        if ($("#textBox2").val() != "") {
-            var taskElement = $("<div></div>")
-            taskElement.addClass("task")
-            taskElement.text($(".textBox2").val())
-
-            var deleteBtnElement = $("<button id=\"delete\"></button>");
-            deleteBtnElement.addClass("fas fa-trash-alt delete");
-
-            var doneBtnElement = $("<button id='done'> </button>")
-            doneBtnElement.addClass("fas fa-check")
-
-            // the new task element, along with its children button elements, is added to the DOM tree
-            taskElement.append(deleteBtnElement, doneBtnElement)
-
-            $(".notCompleted").append(taskElement)
-
-            deleteBtnElement.click(function() {
-                taskElement.fadeOut(1000, function() {
-                    taskElement.remove()
-                });
-            });
-            doneBtnElement.click(function() {
-                taskElement.fadeOut(1000, function() {
-                    $(".notCompleted").remove(taskElement)
-                });
-                taskElement.fadeIn(1000, function() {
-                    $(".completed").append(taskElement)
-                })
-            });
-
-            /* var listItem = $("#textBox2").val();
-            $(".ord_li").append("<li>" + listItem + "</li>"); */
-
-            $("#textBox2").val(""); // clear out the text box
-        } else {
-            alert("Task box is empty. Enter task first. ")
+    $.ajax({
+        type: "GET",
+        url: '/',
+        success: function(data) {
+            console.log('success', data)
         }
+    });
+
+    $("#addTask2").click(function(eventObj) {
+        if ($("#textBox2").val() == "") {
+            alert("Task box is empty. Enter task first. ")
+            return;
+        }
+
+        $.ajax({
+            method: "POST",
+            url: "/new_task",
+            data: {
+                task: $("#textBox2").val()
+            },
+            success: function(data) {
+                var taskElement = $("<div></div>")
+                taskElement.addClass("task")
+                taskElement.text($(".textBox2").val())
+
+                var deleteBtnElement = $("<button id=\"delete\"></button>");
+                deleteBtnElement.addClass("fas fa-trash-alt delete");
+
+                var doneBtnElement = $("<button id='done'> </button>")
+                doneBtnElement.addClass("fas fa-check")
+
+                // the new task element, along with its children button elements, is added to the DOM tree
+                taskElement.append(deleteBtnElement, doneBtnElement)
+
+                $(".notCompleted").append(taskElement)
+
+                deleteBtnElement.click(function() {
+                    taskElement.fadeOut(200, function() {
+                        taskElement.remove();
+                    });
+                });
+                doneBtnElement.click(function() {
+                    taskElement.fadeOut(200, function() {
+                        $(".notCompleted").remove(taskElement);
+                        $(".completed").append(taskElement);
+                        taskElement.fadeIn(200);
+                    });
+                });
+
+                /* var listItem = $("#textBox2").val();
+                $(".ord_li").append("<li>" + listItem + "</li>"); */
+
+                $("#textBox2").val(""); // clear out the text box
+            },
+            error: function(data) {
+                alert("There was an error with ajax");
+            }
+        });
     });
 
     // var newListItem = $("<li> Fourth </li>")

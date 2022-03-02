@@ -7,24 +7,23 @@
     <meta name="description" content="This project will add jQuery functionality to a &quot;to-do list&quot; webpage. ">
 
     <title>To Do List</title>
-    <link href="static/style.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css">
     <!-- Include the jQuery library in our web page -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
     <!-- Linking to an External JavaScript File -->
-    <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="/static/scripts/main.js"></script>
 </head>
 
 <body>
     <div class="div1">
         <input type="text" id="textBox2" class="textBox2" placeholder="Enter task here">
-        <button id="addTask2">Add</button>
+        <button id="addTask2" class="fa fa-plus"></button>
+        <!-- <button id="import" class="fa fa-server"></button> -->
         <div class="notCompleted">
             <h2>To do: </h2>
-            <ol class="ord_li">
 
-            </ol>
         </div>
         <div class="completed">
             <h2>Done: </h2>
