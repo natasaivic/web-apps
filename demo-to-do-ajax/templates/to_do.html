@@ -43,11 +43,25 @@
         </div>
         <div class="completed">
             <h2>Done: </h2>
-            <ul id="complete-todos"></ul>
+            <div class="task_done">
+            {% if done_tasks|count == 0 %}
+                No done tasks to show.
+            {% else %}
+            <ul id="complete-todos">
+                {% for task in done_tasks %}
+                <li class="list_item"> 
+                        {{task['task']}} 
+                        <button class="done fas fa-check" todoid="{{task['id']}}"></button> 
+                        <button class="delete fas fa-trash-alt" todoid="{{task['id']}}"></button> 
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
         </div>
     </div>
 
-    <a href="#" onclick="load()">load</a>
+    <!-- <a href="#" onclick="load()">load</a> -->
 </body>
 
 </html>

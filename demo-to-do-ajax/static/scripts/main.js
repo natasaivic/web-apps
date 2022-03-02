@@ -1,14 +1,19 @@
 $(document).ready(function() {
     // register click for every existing item
     $("button.done").click(function() {
+        var liNode = this.parentNode;
         $.ajax({
             method: "POST",
             url: "/done",
             data: {
-                id: $(this).attr("taskid")
+                id: $(this).attr("todoid")
             },
-            success: function(data) {
+            success: function(response) {
                 // move item from todo to done
+                if (response['status'] == 'OK') {
+                    $(liNode).hide();
+                    $("#complete-todos").append(liNode);
+                } else { console.log("ERROW WITH APPENDING ITEM TO DONE LIST") }
             },
             error: function() {
                 alert("There was an error with ajax");
@@ -43,7 +48,50 @@ $(document).ready(function() {
                 task: $("#textBox").val()
             },
             success: function(response) {
-                $("#new-todos").append(response);
+                var li = $('<li class="list_item"></li>')
+                li.html($("#textBox").val())
+
+                var doneBtn = $('<button class="done fas fa-check" todoid="' + response + '"></button>');
+                li.append(doneBtn);
+                doneBtn.click(function() {
+                    $.ajax({
+                        method: "POST",
+                        url: "/done",
+                        data: {
+                            id: $(this).attr("todoid")
+                        },
+                        success: function(response) {
+                            // move item from todo to done
+                            if (response['status'] == 'OK') {
+                                $("#new-todos").remove(li);
+                                $("#complete-todos").append(li);
+                            } else {
+                                console.log("ERROW WITH APPENDING ITEM TO DONE LIST");
+                            }
+                        },
+                        error: function() {
+                            alert("There was an error with ajax");
+                        }
+                    });
+                });
+
+                var deleteBtn = $('<button class="delete fas fa-trash-alt" todoid="' + response + '"></button>');
+                deleteBtn.click(function() {
+                    $.ajax({
+                        method: "POST",
+                        url: "/delete",
+                        data: {
+                            id: $(this).attr("todoid")
+                        },
+                        success: function(response) {
+                            if (response['status'] == 'OK')
+                                $(li).hide();
+                        }
+                    });
+                });
+                li.append(deleteBtn);
+
+                $("#new-todos").append(li);
                 $("#textBox").val("");
             }
         });

@@ -38,9 +38,9 @@ def select_all_tasks():
     sql = f"""
     SELECT *
     FROM tasks
+    WHERE done = 0
     """
     tasks = query(sql)
-    print(tasks)
     return tasks
 
 
@@ -57,9 +57,33 @@ def save_new_task(task):
         print(f"Error with query = {sql}")
         return None
 
+
 def delete_task(id):
     sql = f"""
         DELETE FROM tasks
         WHERE id = {id}
     """
     return execute(sql)
+
+
+def update_task_to_done(id):
+    sql = f"""
+    UPDATE tasks
+    SET done = 1
+    WHERE id={id}
+    """   
+    try:
+        return execute(sql)
+    except:
+        print(f"Error with query = {sql}")
+        return None
+
+
+def select_all_done_tasks():
+    sql = f"""
+    SELECT *
+    FROM tasks
+    WHERE done = 1
+    """
+    done_tasks = query(sql)
+    return done_tasks
