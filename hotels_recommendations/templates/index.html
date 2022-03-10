@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{% include 'parts/head.html' %}
+
+<body>
+    <h1>Hotels recommendations</h1>
+    <!-- top hotels -->
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        {% for accom in best_rated_hotels %}
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-white rounded-5 shadow-lg" style="background-color: rgba({{range(0, 78)|random}}, {{range(0, 78)|random}}, {{range(0, 78)|random}}, 0.4);">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <ul class="d-flex list-unstyled mt-auto">
+                        <li class="me-auto">
+                            <small>{{accom['name']}}</small>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                            <small>{{accom['websites']}}</small>
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                            <small>Location: {{accom['city']}}</small>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                            <small>Rating: {{accom['reviews_rating']}}</small>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- top shows -->
+
+
+</body>
+
+</html>
