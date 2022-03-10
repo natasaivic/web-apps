@@ -69,3 +69,7 @@ div.create_on {
 textarea.textarea {
     width: 100%;
 }
+
+.like_unlike {
+    float: right;
+}

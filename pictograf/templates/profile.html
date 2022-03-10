@@ -4,8 +4,7 @@
 {% include 'head.html' %}
 
 <body>
-    {% include 'flash_messages.html' %}
-    {% include 'nav.html' %}
+    {% include 'flash_messages.html' %} {% include 'nav.html' %}
 
     <hr>
     <div class="container">
@@ -21,7 +20,23 @@
                     <li>
                         <div><i class="create_on">{{post[3]}}</i></div>
                         <img class="post" src="/static/files/{{post[1]}}">
-                        <br> {{post[2]}} | <b id="likes-of-{{post[0]}}"> {{post_likes[post[0]]}} </b> likes | <a href="{{post[0]}}" class="addlike_class">+1</a> | <a href="{{post[0]}}" class="removelike_class">-1</a> | <a href="/delete_post/{{post[0]}}">Delete post</a>
+                        <br> {{post[2]}} | <a href="/delete_post/{{post[0]}}">Delete post</a>
+                        <div class="test">
+                            <a href="{{post[0]}}" class="test"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                              </svg></a>
+                        </div>
+                        <div class="like_unlike">
+                            <b id="likes-of-{{post[0]}}"> {{post_likes[post[0]]}} </b> likes
+
+                            <a href="{{post[0]}}" class="addlike_class" likeid="{{post[0]}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg></a>
+                            <a href="{{post[0]}}" class="removelike_class" unlikeid="{{post[0]}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                          </svg></a>
+                        </div>
+
                         <br> {% if post_comments[post[0]]|count == 0 %}
                         <form action="/comment/{{post[0]}}" method="POST">
                             <textarea type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
@@ -35,28 +50,9 @@
                             </li>
                             {% endfor %}
                         </ul>
-                        
-                        <textarea id="comment-for-{{post[0]}}" type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
-                        <button id="submit-for-{{post[0]}}" type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button>
-                        <script>
-                            $("#submit-for-{{post[0]}}").on('click', function() {
-                                var comment = $("#comment-for-{{post[0]}}").val();
-                                var post_id = {{post[0]}};
 
-                                $.ajax({
-                                    method: 'POST',
-                                    url: "/comment_ajax/" + post_id,
-                                    data: {comment: comment},
-                                    success: function (result) {
-                                        $("#comments-of-" + post_id).html(result);
-                                    },
-                                    error: function () {
-                                        alert("Comment not successful, try again");
-                                    }
-                                });
-                            });
-                        </script>
-                        {% endif %}
+                        <textarea id="comment-for-{{post[0]}}" type="text" rows="2" cols="40" name="comment" placeholder="Comment" class="textarea"></textarea>
+                        <button id="submit-for-{{post[0]}}" type="submit" name="comment" class="w-100 btn btn-lg btn-primary">Submit Comment</button> {% endif %}
                         <hr>
                     </li>
                     {% endfor %}
@@ -84,18 +80,6 @@
         </div>
     </div>
 
-    <script>
-    # function addLike(post_id) {
-    #     $.ajax({
-    #         method: 'POST',
-    #         url: "/addlike/" + post_id,
-    #         success: function (result) {
-    #             var old_val = parseInt($("#likes-of-" + post_id).html());
-    #             $("#likes-of-" + post_id).html(old_val + 1);
-    #         }
-    #     });
-    # }
-    </script>
 </body>
 
 </html>

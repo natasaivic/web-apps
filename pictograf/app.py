@@ -316,9 +316,24 @@ def addlike(post_id):
         like_exists = db.check_like(user_id, post_id)
         if like_exists == False:
             db.add_like(user_id, post_id)
-            return "", 200
+            return {"status": "OK"}
 
-    return "", 400
+    return {"status": "ERROR"}
+
+
+@app.route("/addlikeTEST", methods=["POST"])
+def addlikeTEST():
+    if not "id" in session:
+        return "", 400
+    
+    post_id = request.form["id"]
+    user_id = session["id"]
+    like_exists = db.check_like(user_id, post_id)
+    if like_exists == False:
+        db.add_like(user_id, post_id)
+        return {"status": "OK"}
+
+    return {"status": "ERROR"}
 
 
 @app.route("/unlike/<post_id>", methods=["POST"])
@@ -330,6 +345,9 @@ def unlike(post_id):
     like_exists = db.check_like(user_id, post_id)
     if like_exists == True:
         db.remove_like(user_id, post_id)
-        return "", 200
+        return {"status": "OK"}
 
-    return "", 400
+    return {"status": "ERROR"}
+
+
+    

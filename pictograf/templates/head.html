@@ -9,58 +9,9 @@
     <link href="/static/style.css" rel="stylesheet">
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
 
+    <!-- Include the jQuery library in our web page -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            console.log("ready!");
+    <!-- Linking to an External JavaScript File -->
+    <script type="text/javascript" src="/static/scripts/main.js"></script>
 
-            var moja_funkcija = function(event) {
-                event.preventDefault();
-
-                var post_id = $(this).attr('href');
-                console.log("Post: " + post_id);
-
-                var ajaxParams = {};
-                ajaxParams['method'] = 'POST';
-                ajaxParams['url'] = "/addlike/" + post_id;
-                ajaxParams['success'] = function(result) {
-                    var old_val = parseInt($("#likes-of-" + post_id).html());
-                    $("#likes-of-" + post_id).html(old_val + 1);
-                };
-
-                $.ajax(ajaxParams);
-            };
-
-            $("a.addlike_class").on('click', moja_funkcija);
-
-
-
-            $("a.removelike_class").on('click', function(e) {
-                e.preventDefault();
-
-                var post_id = $(this).attr('href');
-                $.ajax({
-                    method: "POST",
-                    url: "/unlike/" + post_id,
-                    success: function(result) {
-                        var old_val = parseInt($("#likes-of-" + post_id).html());
-                        $("#likes-of-" + post_id).html(old_val - 1);
-                    },
-                    error: function() {
-                        console.log("There was some error, data could not be loaded");
-                    }
-                });
-            });
-
-            // load more
-            $("#load-more").on('click', function(e) {
-                e.preventDefault();
-
-                // $.ajax();
-
-                var result = "<h3>More content</h3>";
-                $("#more-content").append(result);
-            });
-        });
-    </script>
 </head>
